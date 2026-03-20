@@ -1,0 +1,20 @@
+<page-shell>
+  <view class="container">
+    <view class="card top">
+      <view class="title">老客复购专场</view>
+      <view class="sub">补货提醒、复购券与推荐商品已为你准备好</view>
+      <view class="ops">
+        <view class="btn ui-btn ui-btn--primary" bindtap="onGoCoupon">立即领券</view>
+        <view class="btn ghost ui-btn ui-btn--secondary" bindtap="onGoHome">继续逛逛</view>
+      </view>
+    </view>
+
+    <view class="card section-gap list">
+      <view class="item" wx:for="{{list}}" wx:key="id">
+        <view class="name">{{item.title}}</view>
+        <view class="desc">{{item.desc}}</view>
+        <view class="hint">{{item.couponHint}}</view>
+      </view>
+    </view>
+  </view>
+</page-shell>

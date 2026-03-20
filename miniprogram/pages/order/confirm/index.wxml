@@ -1,0 +1,53 @@
+<page-shell>
+  <view class="container page-wrap">
+    <state-view wx:if="{{pageState === 'loading' || pageState === 'error'}}" state="{{pageState}}" bind:retry="onRetry" />
+
+    <view wx:if="{{pageState === 'empty'}}" class="card empty-wrap">
+      <view class="title">暂无可提交订单商品</view>
+      <view class="go-btn ui-btn ui-btn--secondary" bindtap="onBackCart">返回购物车</view>
+    </view>
+
+    <view wx:if="{{pageState === 'ready'}}">
+      <view class="delivery-wrap card">
+        <view class="delivery-tabs">
+          <view class="delivery-tab {{deliveryMode === item.key ? 'active' : ''}}" wx:for="{{deliveryTabs}}" wx:key="key" data-key="{{item.key}}" bindtap="onSwitchDelivery">
+            {{item.label}}
+          </view>
+        </view>
+        <view class="address" bindtap="onChooseAddress">
+          <view wx:if="{{address}}">
+            <view class="name-row">{{address.name}} {{address.phone}}</view>
+            <view class="detail">{{address.province}}{{address.city}}{{address.district}}{{address.detail}}</view>
+          </view>
+          <view wx:else class="empty-address">＋ 请添加配送地址</view>
+        </view>
+      </view>
+
+      <view class="card section-gap goods-box">
+        <view class="shop-row">◍ 软软家居</view>
+        <view class="goods-item" wx:for="{{items}}" wx:key="id">
+          <image class="cover" src="{{item.image}}" mode="aspectFill" />
+          <view class="meta">
+            <view class="title">{{item.title}}</view>
+            <view class="spec">{{item.size}} · {{item.material}}</view>
+            <view class="qty">×{{item.quantity}}</view>
+          </view>
+          <view class="price">¥{{item.price}}</view>
+        </view>
+      </view>
+
+      <view class="card section-gap amount-box">
+        <view class="row"><text>运费</text><text class="highlight">¥{{freightAmount}}</text></view>
+        <view class="row"><text>买家留言</text></view>
+        <textarea class="remark-input" placeholder="选填，如婚庆急用、工作日收货" maxlength="80" bindinput="onInputRemark" value="{{remark}}" />
+        <view class="row summary"><text>共{{items.length}}件 小计：</text><text class="highlight">¥{{payAmount}}</text></view>
+      </view>
+
+      <view class="submit-bar">
+        <view class="sum">合计: <text class="sum-price">¥{{payAmount}}</text></view>
+
+        <view class="submit-btn ui-btn ui-btn--primary" bindtap="onSubmitOrder">{{submitting ? '支付处理中...' : '提交订单'}}</view>
+      </view>
+    </view>
+  </view>
+</page-shell>

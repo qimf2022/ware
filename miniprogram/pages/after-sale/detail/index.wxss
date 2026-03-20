@@ -1,0 +1,62 @@
+.block {
+  margin-top: 16rpx;
+  padding: 20rpx;
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10rpx;
+  color: var(--text-secondary);
+  font-size: 24rpx;
+}
+
+.row:last-child {
+  margin-bottom: 0;
+}
+
+.status {
+  color: var(--brand-primary);
+}
+
+.title {
+  font-size: 26rpx;
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.desc {
+  margin-top: 10rpx;
+  color: var(--text-secondary);
+  font-size: 24rpx;
+}
+
+.log {
+  margin-top: 12rpx;
+  display: flex;
+}
+
+.dot {
+  width: 14rpx;
+  height: 14rpx;
+  border-radius: 50%;
+  background: var(--brand-primary);
+  margin-top: 10rpx;
+}
+
+.content {
+  margin-left: 12rpx;
+  padding-left: 12rpx;
+  border-left: 2rpx solid var(--border-color);
+}
+
+.text {
+  color: var(--text-primary);
+  font-size: 24rpx;
+}
+
+.time {
+  margin-top: 6rpx;
+  color: var(--text-muted);
+  font-size: 21rpx;
+}

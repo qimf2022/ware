@@ -1,0 +1,19 @@
+:root {
+  --brand-primary: #D81E06;
+  --brand-secondary: #6B2D5C;
+  --bg-page: #F5F5F5;
+  --bg-card: #FFFFFF;
+  --text-primary: #333333;
+  --text-secondary: #666666;
+  --text-muted: #999999;
+  --border-color: #EEEEEE;
+
+  --radius-sm: 8rpx;
+  --radius-md: 16rpx;
+  --radius-pill: 40rpx;
+
+  --space-xs: 8rpx;
+  --space-sm: 16rpx;
+  --space-md: 24rpx;
+  --space-lg: 32rpx;
+}

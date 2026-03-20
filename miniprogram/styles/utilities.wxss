@@ -1,0 +1,56 @@
+.container {
+  padding: 0 24rpx 24rpx;
+}
+
+.card {
+  background: var(--bg-card);
+  border-radius: var(--radius-md);
+}
+
+.price {
+  color: var(--brand-primary);
+  font-weight: 700;
+}
+
+.muted {
+  color: var(--text-muted);
+}
+
+.section-gap {
+  margin-top: 24rpx;
+}
+
+.ui-btn {
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999rpx;
+  border: 2rpx solid transparent;
+  font-size: 24rpx;
+  font-weight: 500;
+  line-height: 1;
+}
+
+.ui-btn--primary {
+  background: var(--brand-primary);
+  border-color: var(--brand-primary);
+  color: #fff;
+}
+
+.ui-btn--secondary {
+  background: #fff;
+  border-color: var(--border-color);
+  color: var(--text-secondary);
+}
+
+.ui-btn--danger {
+  background: #fff3f3;
+  border-color: #ffb8b8;
+  color: #cf1322;
+}
+
+.ui-btn--disabled {
+  opacity: 0.45;
+}
+

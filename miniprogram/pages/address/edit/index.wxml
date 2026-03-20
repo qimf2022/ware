@@ -1,0 +1,21 @@
+<page-shell>
+  <view class="container address-edit-page">
+    <view class="card form">
+      <input class="input" placeholder="收货人" data-field="name" value="{{form.name}}" bindinput="onInput" />
+      <input class="input" placeholder="手机号" type="number" maxlength="11" data-field="phone" value="{{form.phone}}" bindinput="onInput" />
+      <input class="input" placeholder="省份" data-field="province" value="{{form.province}}" bindinput="onInput" />
+      <input class="input" placeholder="城市" data-field="city" value="{{form.city}}" bindinput="onInput" />
+      <input class="input" placeholder="区县" data-field="district" value="{{form.district}}" bindinput="onInput" />
+      <input class="input" placeholder="详细地址" data-field="detail" value="{{form.detail}}" bindinput="onInput" />
+      <view class="default-row">
+        <text>设为默认地址</text>
+        <switch checked="{{form.isDefault}}" color="#D81E06" bindchange="onSwitchDefault" />
+      </view>
+    </view>
+
+    <view class="bottom-actions">
+      <view class="save-btn {{submitLoading ? 'disabled' : ''}}" bindtap="onSave">{{submitLoading ? '保存中...' : '保存地址'}}</view>
+    </view>
+  </view>
+</page-shell>
+

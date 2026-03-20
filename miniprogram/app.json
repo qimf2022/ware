@@ -1,0 +1,73 @@
+{
+  "pages": [
+    "pages/home/index",
+    "pages/home/search/index",
+    "pages/home/topic/index",
+    "pages/category/index",
+    "pages/cart/index",
+    "pages/mine/index",
+    "pages/auth/login/index",
+    "pages/product/detail",
+    "pages/order/confirm/index",
+    "pages/address/list/index",
+    "pages/address/edit/index",
+    "pages/pay/result/index",
+    "pages/order/list/index",
+    "pages/order/detail/index",
+    "pages/order/logistics/index",
+    "pages/after-sale/apply/index",
+    "pages/after-sale/detail/index",
+    "pages/aftersale/list/index",
+    "pages/user/favorites/index",
+    "pages/user/history/index",
+    "pages/user/bind-mobile/index",
+    "pages/user/about/index",
+    "pages/user/profile/index",
+    "pages/marketing/coupon/index",
+
+    "pages/marketing/points/index",
+    "pages/marketing/gift-card/index",
+    "pages/marketing/activity/index"
+  ],
+  "window": {
+    "navigationBarTitleText": "诗语家居",
+    "navigationBarBackgroundColor": "#FFFFFF",
+    "navigationBarTextStyle": "black",
+    "backgroundColor": "#F5F5F5",
+    "backgroundTextStyle": "light",
+    "disableSwipeBack": false
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json",
+  "usingComponents": {
+    "product-card": "/components/product-card/index",
+    "brand-header": "/components/brand-header/index",
+    "page-shell": "/components/page-shell/index",
+    "state-view": "/components/state-view/index"
+  },
+  "tabBar": {
+    "custom": true,
+    "color": "#999999",
+    "selectedColor": "#D81E06",
+    "backgroundColor": "#FFFFFF",
+    "borderStyle": "black",
+    "list": [
+      {
+        "pagePath": "pages/home/index",
+        "text": "首页"
+      },
+      {
+        "pagePath": "pages/category/index",
+        "text": "分类"
+      },
+      {
+        "pagePath": "pages/cart/index",
+        "text": "购物车"
+      },
+      {
+        "pagePath": "pages/mine/index",
+        "text": "我的"
+      }
+    ]
+  }
+}

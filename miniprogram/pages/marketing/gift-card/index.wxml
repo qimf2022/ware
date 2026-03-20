@@ -1,0 +1,33 @@
+<page-shell>
+  <view class="container" wx:if="{{summary}}">
+    <view class="card head">
+      <view class="label">可用余额（元）</view>
+      <view class="num">{{summary.balance}}</view>
+    </view>
+
+    <view class="card section-gap panel">
+      <view class="title">我的卡券</view>
+      <view class="card-item" wx:for="{{summary.cards}}" wx:key="id">
+        <view>
+          <view class="name">{{item.title}}</view>
+          <view class="expire">有效期至 {{item.expireAt}}</view>
+        </view>
+        <view class="right">
+          <view class="amount">¥{{item.amount}}</view>
+          <view class="status">{{item.status}}</view>
+        </view>
+      </view>
+    </view>
+
+    <view class="card section-gap panel">
+      <view class="title">消费明细</view>
+      <view class="record" wx:for="{{summary.records}}" wx:key="id">
+        <view>
+          <view class="name">{{item.title}}</view>
+          <view class="expire">{{item.time}}</view>
+        </view>
+        <view class="amount">{{item.amount}}</view>
+      </view>
+    </view>
+  </view>
+</page-shell>

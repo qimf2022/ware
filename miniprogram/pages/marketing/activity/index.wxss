@@ -1,0 +1,63 @@
+.top {
+  margin-top: 20rpx;
+  padding: 22rpx;
+}
+
+.title {
+  font-size: 30rpx;
+  color: var(--text-primary);
+  font-weight: 700;
+}
+
+.sub {
+  margin-top: 10rpx;
+  color: var(--text-secondary);
+  font-size: 23rpx;
+}
+
+.ops {
+  margin-top: 18rpx;
+  display: flex;
+  gap: 12rpx;
+}
+
+.btn {
+  flex: 1;
+  height: 60rpx;
+  border-radius: 30rpx;
+  font-size: 23rpx;
+}
+
+
+.list {
+  padding: 20rpx;
+}
+
+.item {
+  margin-top: 14rpx;
+  padding-top: 14rpx;
+  border-top: 2rpx solid var(--border-color);
+}
+
+.item:first-child {
+  margin-top: 8rpx;
+  border-top: 0;
+  padding-top: 0;
+}
+
+.name {
+  font-size: 26rpx;
+  color: var(--text-primary);
+}
+
+.desc {
+  margin-top: 8rpx;
+  color: var(--text-secondary);
+  font-size: 23rpx;
+}
+
+.hint {
+  margin-top: 8rpx;
+  color: var(--brand-primary);
+  font-size: 22rpx;
+}

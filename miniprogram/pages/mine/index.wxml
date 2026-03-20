@@ -1,0 +1,98 @@
+<page-shell>
+  <scroll-view class="mine-scroll" scroll-y="true" enhanced="true" show-scrollbar="false" bounces="true">
+    <view class="mine-page">
+    <!-- 顶部背景区 -->
+    <view class="hero">
+      <!-- 装饰元素 -->
+      <view class="hero-decor hero-decor-1"></view>
+      <view class="hero-decor hero-decor-2"></view>
+      <view class="hero-decor hero-decor-3"></view>
+        <view class="hero-top">
+          <view class="hero-title">用户中心</view>
+          <view class="top-actions">
+            <view class="action-btn" bindtap="onTapQrcode">⊞</view>
+            <view class="action-btn" bindtap="onTapAddress">⊙</view>
+            <view class="action-btn" bindtap="onTapSetting">⚙</view>
+          </view>
+        </view>
+
+        <view class="user-row">
+          <view class="avatar-wrap" bindtap="onTapAvatar">
+            <image wx:if="{{profile.avatarUrl}}" class="avatar" src="{{profile.avatarUrl}}" mode="aspectFill" />
+            <view wx:else class="avatar">{{avatarText}}</view>
+          </view>
+          <view class="user-meta">
+            <view class="nickname">{{profile.nickname}}</view>
+            <view wx:if="{{authMode === 'guest' && canIUseGetUserProfile}}" class="login-btn" bindtap="onWechatLogin">{{isLogging ? '授权中...' : '授权'}}</view>
+            <button wx:elif="{{authMode === 'guest'}}" class="login-btn legacy" disabled="{{true}}">请升级微信后授权</button>
+          </view>
+        </view>
+        <!-- 底部弧度 -->
+        <view class="hero-curve"></view>
+      </view>
+
+      <!-- 品牌标题 -->
+      <view class="brand-title">—— 诗语家居 ——</view>
+
+      <!-- 统计区：收藏/足迹 -->
+      <view class="card stat-card">
+        <view class="stat-item" data-type="favorite" bindtap="onTapStat">
+          <view class="stat-num">{{profile.favoriteCount}}</view>
+          <view class="stat-label-wrap">
+            <text class="stat-icon">★</text>
+            <text class="stat-label">我的收藏</text>
+          </view>
+        </view>
+        <view class="divider"></view>
+        <view class="stat-item" data-type="history" bindtap="onTapStat">
+          <view class="stat-num">{{profile.footprintCount}}</view>
+          <view class="stat-label-wrap">
+            <text class="stat-icon">👣</text>
+            <text class="stat-label">我的足迹</text>
+          </view>
+        </view>
+      </view>
+
+      <!-- 我的订单 -->
+      <view class="card section-gap order-card">
+        <view class="section-head" bindtap="onTapOrder">
+          <view class="section-title">我的订单</view>
+          <view class="more">查看更多 ></view>
+        </view>
+        <view class="order-grid">
+          <view class="order-item" wx:for="{{orderStatusList}}" wx:key="label" data-status="{{item.status}}" data-type="{{item.type}}" bindtap="onTapOrderStatus">
+            <view class="order-icon">{{item.icon}}</view>
+            <view class="order-label">{{item.label}}</view>
+          </view>
+        </view>
+      </view>
+
+      <!-- 资产卡 -->
+      <view class="card section-gap asset-card">
+        <view class="asset-item" wx:for="{{assetCards}}" wx:key="label" data-url="{{item.url}}" bindtap="onTapAsset">
+          <view class="asset-num">{{profile[item.key] || 0}}</view>
+          <view class="asset-label-wrap">
+            <text class="asset-icon">{{item.icon}}</text>
+            <text class="asset-label">{{item.label}}</text>
+          </view>
+        </view>
+      </view>
+
+      <!-- 服务入口 -->
+      <view class="card section-gap service-card">
+        <view class="service-item" wx:for="{{serviceMenus}}" wx:key="label" data-url="{{item.url}}" bindtap="onTapService">
+          <view class="service-icon {{item.color}}">{{item.icon}}</view>
+          <view class="service-label">{{item.label}}</view>
+        </view>
+      </view>
+
+      <!-- 底部技术支持 -->
+      <view class="support">
+        <view class="support-title">技术支持：诗语家纺</view>
+      </view>
+
+      <!-- 底部占位，确保可滚动 -->
+      <view class="bottom-placeholder"></view>
+    </view>
+  </scroll-view>
+</page-shell>

@@ -1,0 +1,83 @@
+.tab-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  height: 88rpx;
+  background: #fff;
+  border-bottom: 1rpx solid #f0f0f0;
+}
+
+.tab-item {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  padding: 0 20rpx;
+}
+
+.tab-text {
+  font-size: 28rpx;
+  color: #666;
+}
+
+.tab-item.active .tab-text {
+  color: #ff4d4f;
+  font-weight: 500;
+}
+
+.tab-line {
+  position: absolute;
+  bottom: 8rpx;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 48rpx;
+  height: 4rpx;
+  background: #ff4d4f;
+  border-radius: 2rpx;
+}
+
+.list {
+  padding: 20rpx;
+}
+
+.item {
+  margin-bottom: 20rpx;
+  padding: 24rpx;
+  background: #fff;
+  border-radius: 12rpx;
+}
+
+.top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.order-no {
+  color: #333;
+  font-size: 26rpx;
+}
+
+.status {
+  color: #ff4d4f;
+  font-size: 26rpx;
+}
+
+.time {
+  margin-top: 12rpx;
+  color: #999;
+  font-size: 24rpx;
+}
+
+.amount {
+  margin-top: 16rpx;
+  font-size: 26rpx;
+  color: #333;
+}
+
+.price {
+  color: #ff4d4f;
+  font-weight: 500;
+}

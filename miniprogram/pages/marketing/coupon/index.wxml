@@ -1,0 +1,26 @@
+<page-shell>
+  <view class="container">
+    <state-view wx:if="{{pageState !== 'ready'}}" state="{{pageState}}" emptyText="暂无可领取优惠券" />
+
+    <view wx:if="{{pageState === 'ready'}}">
+      <view class="card coupon" wx:for="{{list}}" wx:key="id">
+        <view class="left">
+          <view class="amount" wx:if="{{item.amount > 0}}">¥{{item.amount}}</view>
+          <view class="amount" wx:else>{{item.discount}}折</view>
+          <view class="threshold" wx:if="{{item.threshold > 0}}">满{{item.threshold}}可用</view>
+          <view class="threshold" wx:else>无门槛</view>
+        </view>
+        <view class="mid">
+          <view class="title">{{item.title}}</view>
+          <view class="desc">适用范围：{{item.scope}}</view>
+          <view class="expire">有效期至：{{item.expireAt}}</view>
+        </view>
+        <view class="right">
+          <view class="btn ui-btn {{item.claimed ? 'ui-btn--disabled disabled' : 'ui-btn--primary'}}" data-id="{{item.id}}" data-claimed="{{item.claimed}}" bindtap="onClaim">
+            {{item.claimed ? '已领取' : '立即领取'}}
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+</page-shell>

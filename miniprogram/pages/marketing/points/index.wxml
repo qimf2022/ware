@@ -1,0 +1,20 @@
+<page-shell>
+  <view class="container" wx:if="{{summary}}">
+    <view class="card balance">
+      <view class="label">当前积分</view>
+      <view class="num">{{summary.balance}}</view>
+      <view class="rule">{{summary.rules}}</view>
+    </view>
+
+    <view class="card section-gap records">
+      <view class="title">积分流水</view>
+      <view class="item" wx:for="{{summary.records}}" wx:key="id">
+        <view>
+          <view class="name">{{item.title}}</view>
+          <view class="time">{{item.time}}</view>
+        </view>
+        <view class="amount {{item.amount.indexOf('-') === 0 ? 'minus' : 'plus'}}">{{item.amount}}</view>
+      </view>
+    </view>
+  </view>
+</page-shell>

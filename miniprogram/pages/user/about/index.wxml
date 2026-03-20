@@ -1,0 +1,19 @@
+<page-shell>
+  <view class="container">
+    <view class="card block">
+      <view class="title">诗语家居（Yu Home）</view>
+      <view class="desc">专注卧室与家纺生活方式，提供套件、被芯、枕类与软装周边的一站式选购体验。</view>
+    </view>
+
+    <view class="card block section-gap">
+      <view class="row"><text>发货说明</text><text>48小时内发货</text></view>
+      <view class="row"><text>售后政策</text><text>7天无理由</text></view>
+      <view class="row"><text>客服时间</text><text>9:00 - 21:00</text></view>
+    </view>
+
+    <view class="card block section-gap">
+      <view class="service" bindtap="onCopyWechat">客服微信：YUHOME_SERVICE（点击复制）</view>
+      <view class="service" bindtap="onCallService">客服电话：400-800-8899（点击拨打）</view>
+    </view>
+  </view>
+</page-shell>

@@ -1,0 +1,27 @@
+<page-shell>
+  <view class="container">
+    <!-- Tab 切换 -->
+    <view class="tab-bar">
+      <view class="tab-item {{activeTab === item.value ? 'active' : ''}}"
+            wx:for="{{tabs}}" wx:key="value"
+            data-value="{{item.value}}"
+            bindtap="onChangeTab">
+        <text class="tab-text">{{item.label}}</text>
+        <view wx:if="{{activeTab === item.value}}" class="tab-line"></view>
+      </view>
+    </view>
+
+    <state-view wx:if="{{pageState !== 'ready'}}" state="{{pageState}}" emptyText="暂无相关订单" bind:retry="onRetry" />
+
+    <view wx:if="{{pageState === 'ready'}}" class="list">
+      <view class="card item" wx:for="{{orders}}" wx:key="id" data-id="{{item.id}}" bindtap="onTapOrder">
+        <view class="top">
+          <view class="order-no">订单号：{{item.orderNo}}</view>
+          <view class="status">{{item.status}}</view>
+        </view>
+        <view class="time">{{item.createdAt}}</view>
+        <view class="amount">实付：<text class="price">¥{{item.amounts.payAmount}}</text></view>
+      </view>
+    </view>
+  </view>
+</page-shell>

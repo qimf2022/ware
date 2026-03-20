@@ -1,0 +1,8 @@
+@import "./styles/variables.wxss";
+@import "./styles/utilities.wxss";
+
+page {
+  background: var(--bg-page);
+  color: var(--text-primary);
+  font-size: 28rpx;
+}

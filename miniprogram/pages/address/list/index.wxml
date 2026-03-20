@@ -1,0 +1,44 @@
+<page-shell>
+  <view class="address-page">
+    <view class="tab-row">
+      <view class="tab {{activeTab === 'express' ? 'active' : ''}}" data-tab="express" bindtap="onSwitchTab">快递地址</view>
+      <view class="tab {{activeTab === 'city' ? 'active' : ''}}" data-tab="city" bindtap="onSwitchTab">同城配送地址</view>
+    </view>
+
+    <view class="search-box">
+      <text class="search-icon">⌕</text>
+      <input class="search-input" placeholder="请输入收货人或联系电话搜索" value="{{keyword}}" bindinput="onInputKeyword" />
+    </view>
+
+    <view wx:if="{{!filteredAddresses.length}}" class="empty-wrap">
+      <view class="empty-illu">⌖</view>
+      <view class="empty-text">暂无收货地址~</view>
+    </view>
+
+    <view wx:else class="list-wrap">
+      <view class="card item" wx:for="{{filteredAddresses}}" wx:key="id" data-id="{{item.id}}" bindtap="onSelect">
+        <view class="top-row">
+          <view class="left-title">
+            <view wx:if="{{mode === 'select'}}" class="check {{selectedId === item.id ? 'checked' : ''}}">✓</view>
+            <text class="name">{{item.name}}</text>
+            <text class="phone">{{item.phone}}</text>
+          </view>
+          <view class="right-tags">
+            <view wx:if="{{item.isDefault}}" class="tag">默认</view>
+            <view wx:if="{{!item.isDefault}}" class="tag action" data-id="{{item.id}}" catchtap="onSetDefault">设为默认</view>
+          </view>
+        </view>
+        <view class="detail">{{item.province}}{{item.city}}{{item.district}}{{item.detail}}</view>
+        <view wx:if="{{mode !== 'select'}}" class="ops">
+          <view class="btn ui-btn ui-btn--secondary" data-id="{{item.id}}" bindtap="onEditAddress">编辑</view>
+          <view class="btn ui-btn ui-btn--danger" data-id="{{item.id}}" bindtap="onDeleteAddress">删除</view>
+        </view>
+      </view>
+    </view>
+
+    <view class="bottom-actions">
+      <view class="manual-btn" bindtap="onAddAddress">⊕ 手动添加</view>
+      <view class="auto-btn" bindtap="onAutoGetAddress">✓ 自动获取</view>
+    </view>
+  </view>
+</page-shell>

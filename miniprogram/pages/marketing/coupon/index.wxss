@@ -1,0 +1,62 @@
+.coupon {
+  margin-top: 16rpx;
+  padding: 18rpx;
+  display: flex;
+}
+
+.left {
+  width: 150rpx;
+  border-right: 2rpx dashed var(--border-color);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.amount {
+  color: var(--brand-primary);
+  font-size: 40rpx;
+  font-weight: 700;
+}
+
+.threshold {
+  margin-top: 6rpx;
+  color: var(--text-muted);
+  font-size: 20rpx;
+}
+
+.mid {
+  flex: 1;
+  padding: 0 16rpx;
+}
+
+.title {
+  font-size: 28rpx;
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.desc,
+.expire {
+  margin-top: 8rpx;
+  color: var(--text-secondary);
+  font-size: 22rpx;
+}
+
+.right {
+  width: 120rpx;
+  display: flex;
+  align-items: center;
+}
+
+.btn {
+  width: 120rpx;
+  height: 56rpx;
+  border-radius: 28rpx;
+  font-size: 22rpx;
+}
+
+.btn.disabled {
+  color: #888;
+}
+

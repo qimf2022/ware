@@ -1,0 +1,74 @@
+<page-shell>
+  <view class="profile-page">
+    <view class="group">
+      <view class="row">
+        <text class="label">ID</text>
+        <text class="value">{{profile.id || '--'}}</text>
+      </view>
+
+      <view class="row" bindtap="onChooseAvatar">
+        <text class="label">头像</text>
+        <view class="right">
+          <image wx:if="{{profile.avatarUrl}}" class="avatar" src="{{profile.avatarUrl}}" mode="aspectFill" />
+          <view wx:else class="avatar empty">+</view>
+          <text class="arrow">›</text>
+        </view>
+      </view>
+
+      <view class="row" bindtap="onEditNickname">
+        <text class="label">昵称</text>
+        <view class="right">
+          <text class="value {{profile.nickname ? '' : 'placeholder'}}">{{profile.nickname || '请输入昵称'}}</text>
+          <text class="arrow">›</text>
+        </view>
+      </view>
+
+      <view class="row" bindtap="onEditRealName">
+        <text class="label">姓名</text>
+        <view class="right">
+          <text class="value {{realName ? '' : 'placeholder'}}">{{realName || '请输入姓名'}}</text>
+          <text class="arrow">›</text>
+        </view>
+      </view>
+
+      <view class="row" bindtap="onChooseGender">
+        <text class="label">性别</text>
+        <view class="right">
+          <text class="value {{profile.gender ? '' : 'placeholder'}}">{{genderLabel}}</text>
+          <text class="arrow">›</text>
+        </view>
+      </view>
+
+      <view class="row row-picker">
+        <text class="label">出生日期</text>
+        <picker mode="date" value="{{birthday}}" start="1950-01-01" end="2099-12-31" bindchange="onBirthdayChange">
+          <view class="right">
+            <text class="value {{birthday ? '' : 'placeholder'}}">{{birthday || '请选择'}}</text>
+            <text class="arrow">›</text>
+          </view>
+        </picker>
+      </view>
+    </view>
+
+    <view class="group">
+      <view class="row" bindtap="onTapAddress">
+        <text class="label">我的地址</text>
+        <text class="arrow">›</text>
+      </view>
+      <view class="row" bindtap="onTapBindMobile">
+        <text class="label">绑定手机号</text>
+        <view class="right">
+          <text class="value {{profile.phone ? '' : 'placeholder'}}">{{profile.phone || '未绑定'}}</text>
+          <text class="arrow">›</text>
+        </view>
+      </view>
+    </view>
+
+    <view class="logout-wrap">
+      <view class="logout" bindtap="onLogout">
+        <text class="logout-icon">⎋</text>
+        <text>退出登录</text>
+      </view>
+    </view>
+  </view>
+</page-shell>

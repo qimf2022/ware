@@ -1,0 +1,39 @@
+.block {
+  margin-top: 16rpx;
+  padding: 22rpx;
+}
+
+.title {
+  color: var(--text-primary);
+  font-size: 30rpx;
+  font-weight: 700;
+}
+
+.desc {
+  margin-top: 12rpx;
+  color: var(--text-secondary);
+  font-size: 24rpx;
+  line-height: 1.7;
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 12rpx;
+  font-size: 24rpx;
+  color: var(--text-secondary);
+}
+
+.row:last-child {
+  margin-bottom: 0;
+}
+
+.service {
+  margin-bottom: 12rpx;
+  color: var(--brand-primary);
+  font-size: 24rpx;
+}
+
+.service:last-child {
+  margin-bottom: 0;
+}

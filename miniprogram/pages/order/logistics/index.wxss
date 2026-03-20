@@ -1,0 +1,59 @@
+.head,
+.trace {
+  margin-top: 16rpx;
+  padding: 20rpx;
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 12rpx;
+  font-size: 24rpx;
+  color: var(--text-secondary);
+}
+
+.row:last-child {
+  margin-bottom: 0;
+}
+
+.status {
+  color: var(--brand-primary);
+}
+
+.title {
+  color: var(--text-primary);
+  font-size: 27rpx;
+  font-weight: 600;
+}
+
+.node {
+  margin-top: 14rpx;
+  display: flex;
+}
+
+.dot {
+  width: 14rpx;
+  height: 14rpx;
+  border-radius: 50%;
+  background: var(--brand-primary);
+  margin-top: 10rpx;
+  flex-shrink: 0;
+}
+
+.content {
+  margin-left: 12rpx;
+  padding-bottom: 12rpx;
+  border-left: 2rpx solid var(--border-color);
+  padding-left: 12rpx;
+}
+
+.text {
+  color: var(--text-primary);
+  font-size: 24rpx;
+}
+
+.time {
+  margin-top: 6rpx;
+  color: var(--text-muted);
+  font-size: 21rpx;
+}

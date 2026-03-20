@@ -1,0 +1,30 @@
+.brand {
+  display: flex;
+  align-items: center;
+  padding: 20rpx;
+}
+
+.logo {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 50%;
+  border: 2rpx solid #f1f1f1;
+  background: #fff;
+}
+
+.meta {
+  margin-left: 16rpx;
+}
+
+.name {
+  font-size: 30rpx;
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.desc {
+  margin-top: 8rpx;
+  font-size: 22rpx;
+  color: var(--text-muted);
+}
+

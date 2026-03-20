@@ -1,0 +1,108 @@
+<page-shell>
+  <view class="container home-page">
+    <view class="hero card" bindtap="onTapBanner">
+      <image class="hero-image" src="{{bannerImage}}" mode="aspectFill" />
+      <view class="hero-mask"></view>
+      <view class="hero-search" bindtap="onTapSearch">搜索床品、被子、枕头</view>
+      <view class="hero-copy">
+        <view class="hero-title">{{bannerText}}</view>
+        <view class="hero-sub">点击查看专题活动</view>
+      </view>
+    </view>
+
+    <brand-header class="section-gap" />
+
+    <view class="category-grid section-gap card">
+      <view
+        class="category-item"
+        wx:for="{{categories}}"
+        wx:key="id"
+        data-index="{{index}}"
+        bindtap="onTapCategory"
+      >
+        <image class="icon" src="{{item.image}}" mode="aspectFill" />
+        <view class="label">{{item.name}}</view>
+      </view>
+    </view>
+
+    <view class="recommend-title section-gap">推荐商品</view>
+
+    <state-view wx:if="{{pageState !== 'ready'}}" state="{{pageState}}" emptyText="暂无推荐商品" bind:retry="onRetry" />
+
+    <block wx:if="{{pageState === 'ready'}}">
+      <view class="product-grid">
+        <product-card
+          wx:for="{{products}}"
+          wx:key="id"
+          product="{{item}}"
+          bind:tap="onTapProduct"
+          bind:addcart="onAddCart"
+        />
+      </view>
+      <view class="load-more">
+        <text wx:if="{{loadingMore}}">正在加载更多...</text>
+        <text wx:elif="{{noMore}}">已经到底</text>
+      </view>
+    </block>
+
+    <view wx:if="{{skuPopupVisible}}" class="sku-mask" bindtap="onCloseSkuPopup"></view>
+    <view wx:if="{{skuPopupVisible}}" class="sku-popup" catchtap="onTapSkuPopupPanel">
+      <view class="sku-head">
+        <image class="sku-cover" src="{{(popupCurrentSku && popupCurrentSku.image) || (popupProduct && popupProduct.image)}}" mode="aspectFill" />
+        <view class="sku-info">
+          <view class="sku-price">¥{{popupCurrentSku.price}}</view>
+          <view class="sku-stock">库存：{{popupCurrentSku.stock}}</view>
+        </view>
+        <view class="sku-close" bindtap="onCloseSkuPopup">×</view>
+      </view>
+
+      <view class="sku-section" wx:if="{{popupSpecs.size.length}}">
+        <view class="sku-title">规格</view>
+        <view class="sku-chips">
+          <view
+            class="sku-chip {{popupSelectedSpecs.size === item ? 'active' : ''}} {{popupSpecDisabledMap.size[item] ? 'disabled' : ''}}"
+            wx:for="{{popupSpecs.size}}"
+            wx:key="*this"
+            data-key="size"
+            data-value="{{item}}"
+            bindtap="onSelectPopupSpec"
+          >
+            {{item}}
+          </view>
+        </view>
+      </view>
+
+      <view class="sku-section" wx:if="{{popupSpecs.material.length > 1}}">
+        <view class="sku-title">花型</view>
+        <view class="sku-chips">
+          <view
+            class="sku-chip {{popupSelectedSpecs.material === item ? 'active' : ''}} {{popupSpecDisabledMap.material[item] ? 'disabled' : ''}}"
+            wx:for="{{popupSpecs.material}}"
+            wx:key="*this"
+            data-key="material"
+            data-value="{{item}}"
+            bindtap="onSelectPopupSpec"
+          >
+            {{item}}
+          </view>
+        </view>
+      </view>
+
+      <view class="sku-qty-row">
+        <view class="sku-title">数量</view>
+        <view class="sku-qty-box">
+          <view class="sku-qty-btn {{popupQuantity <= 1 ? 'disabled' : ''}}" data-type="dec" bindtap="onChangePopupQty">－</view>
+          <view class="sku-qty-value">{{popupQuantity}}</view>
+          <view class="sku-qty-btn {{popupQuantity >= (popupCurrentSku.stock || 0) ? 'disabled' : ''}}" data-type="inc" bindtap="onChangePopupQty">＋</view>
+        </view>
+      </view>
+
+      <view class="sku-actions">
+        <view class="sku-add {{submitLoading ? 'disabled' : ''}}" bindtap="onConfirmPopupAddCart">{{submitLoading && pendingAction === 'add' ? '加入中...' : '加入购物车'}}</view>
+        <view class="sku-buy {{submitLoading ? 'disabled' : ''}}" bindtap="onConfirmPopupBuyNow">{{submitLoading && pendingAction === 'buy' ? '支付中...' : '立即购买'}}</view>
+      </view>
+    </view>
+  </view>
+</page-shell>
+
+

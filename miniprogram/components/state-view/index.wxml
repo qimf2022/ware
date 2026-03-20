@@ -1,0 +1,6 @@
+<view class="state-wrap">
+  <view wx:if="{{state === 'loading'}}" class="text">{{loadingText}}</view>
+  <view wx:elif="{{state === 'empty'}}" class="text">{{emptyText}}</view>
+  <view wx:elif="{{state === 'error'}}" class="text error">{{errorText}}</view>
+  <view wx:if="{{state === 'error'}}" class="btn" bindtap="onRetry">{{actionText}}</view>
+</view>

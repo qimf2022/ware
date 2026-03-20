@@ -1,0 +1,27 @@
+server:
+  port: 8083
+
+spring:
+  datasource:
+    url: jdbc:p6spy:mysql://192.168.134.135:3306/open_test?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai&useSSL=false&allowPublicKeyRetrieval=true
+    username: openClaw
+    password: openClaw
+    driver-class-name: com.p6spy.engine.spy.P6SpyDriver
+
+
+app:
+  redis-key:
+    env: dev
+
+logging:
+  level:
+    com.shiyu.backend: DEBUG
+    com.p6spy: INFO
+    p6spy: INFO
+    org.springframework.jdbc.core.JdbcTemplate: WARN
+    org.springframework.jdbc.core.StatementCreatorUtils: WARN
+    org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate: WARN
+
+
+
+

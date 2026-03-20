@@ -1,0 +1,103 @@
+<page-shell>
+  <view class="container cart-page" bindtap="onPageTap">
+    <state-view wx:if="{{pageState === 'loading' || pageState === 'error'}}" state="{{pageState}}" bind:retry="onRetry" />
+
+    <view wx:if="{{pageState === 'empty'}}" class="card empty-wrap">
+      <view class="icon">🛒</view>
+      <view class="title">购物车还是空的哦</view>
+      <view class="desc">去首页挑选喜欢的家纺商品吧</view>
+      <view class="go-btn ui-btn ui-btn--primary" bindtap="onContinueShopping">去逛逛</view>
+    </view>
+
+    <view wx:if="{{pageState === 'ready'}}">
+      <view class="tip-row card">
+        <view class="tip">商品库存有限，请尽快下单</view>
+        <view class="edit" bindtap="onToggleEdit">{{editMode ? '完成' : '编辑'}}</view>
+      </view>
+
+      <view class="list section-gap">
+        <view class="card item" wx:for="{{cartItems}}" wx:for-item="item" wx:for-index="idx" wx:key="id">
+          <view class="swipe-item">
+            <movable-area class="movable-area">
+              <movable-view
+                class="movable-view"
+                direction="horizontal"
+                inertia="{{true}}"
+                out-of-bounds="{{false}}"
+                friction="{{10}}"
+                damping="{{30}}"
+                x="{{item.x || 0}}"
+                data-id="{{item.id}}"
+                data-index="{{idx}}"
+                bindchange="onMovableChange"
+                bindtouchend="onMovableTouchEnd"
+              >
+                <view class="item-content" catchtap="onItemTap" data-id="{{item.id}}" data-index="{{idx}}">
+                  <view class="shop-row">
+                    <view class="check {{item.checked ? 'checked' : ''}}" data-id="{{item.id}}" catchtap="onToggleItem">✓</view>
+                    <view class="shop-name">{{item.shopName || item.brandName || '软软家居'}}</view>
+                  </view>
+
+                  <view class="item-main">
+                    <image class="cover" src="{{item.image}}" mode="aspectFill" data-product-id="{{item.productId}}" catchtap="onTapProduct" />
+                    <view class="content" data-product-id="{{item.productId}}" catchtap="onTapProduct">
+                      <view class="name">{{item.title}}</view>
+                      <view class="spec">{{item.size}} {{item.material}}</view>
+                      <view class="price-row">
+                        <view>
+                          <text class="price">¥{{item.price}}</text>
+                          <text class="origin">¥{{item.originPrice}}</text>
+                        </view>
+                      </view>
+                    </view>
+                    <view class="qty-box">
+                      <view class="qty-btn dec {{item.quantity <= 1 ? 'disabled' : ''}}" data-id="{{item.id}}" data-type="dec" catchtap="onChangeQty">－</view>
+                      <view class="qty">{{item.quantity}}</view>
+                      <view class="qty-btn inc" data-id="{{item.id}}" data-type="inc" catchtap="onChangeQty">＋</view>
+                    </view>
+                  </view>
+                </view>
+                <view class="delete-btn" data-id="{{item.id}}" catchtap="onSwipeDelete">删除</view>
+              </movable-view>
+            </movable-area>
+          </view>
+        </view>
+      </view>
+
+      <view wx:if="{{recommendList.length}}" class="recommend section-gap">
+        <view class="recommend-head">
+          <view class="line"></view>
+          <view class="text">♡ 您或许会喜欢</view>
+          <view class="line"></view>
+        </view>
+        <view class="recommend-grid">
+          <view class="card recommend-item" wx:for="{{recommendList}}" wx:key="id">
+            <image class="recommend-cover" src="{{item.image}}" mode="aspectFill" data-id="{{item.id}}" bindtap="onTapRecommend" />
+            <view class="recommend-content" data-id="{{item.id}}" bindtap="onTapRecommend">
+              <view class="recommend-title">{{item.title}}</view>
+              <view class="recommend-sold">已售{{item.soldCount}}件</view>
+              <view class="recommend-bottom">
+                <view>
+                  <text class="recommend-price">¥{{item.price}}</text>
+                  <text class="recommend-origin">¥{{item.originPrice}}</text>
+                </view>
+                <view class="add-btn" data-id="{{item.id}}" catchtap="onAddRecommendCart">🛒</view>
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+
+      <view class="action-bar">
+        <view class="all" bindtap="onToggleAll">
+          <view class="check {{allChecked ? 'checked' : ''}}">✓</view>
+          <text>全选</text>
+        </view>
+        <view class="summary">
+          <view>总计：<text class="total">¥{{totalAmount}}</text></view>
+        </view>
+        <view class="checkout-btn {{actionDisabled ? 'disabled' : ''}}" bindtap="onSubmitAction">{{editMode ? '删除' : '去结算'}}</view>
+      </view>
+    </view>
+  </view>
+</page-shell>

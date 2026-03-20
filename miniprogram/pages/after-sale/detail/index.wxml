@@ -1,0 +1,31 @@
+<page-shell>
+  <view class="container">
+    <state-view wx:if="{{pageState !== 'ready'}}" state="{{pageState}}" emptyText="暂无售后记录" />
+
+    <view wx:if="{{pageState === 'ready' && detail}}">
+      <view class="card block">
+        <view class="row"><text>售后单号</text><text>{{detail.id}}</text></view>
+        <view class="row"><text>关联订单</text><text>{{detail.orderNo || detail.orderId}}</text></view>
+        <view class="row"><text>售后类型</text><text>{{detail.type}}</text></view>
+        <view class="row"><text>处理状态</text><text class="status">{{detail.status}}</text></view>
+      </view>
+
+      <view class="card block section-gap">
+        <view class="title">申请说明</view>
+        <view class="desc">原因：{{detail.reason}}</view>
+        <view class="desc" wx:if="{{detail.desc}}">补充：{{detail.desc}}</view>
+      </view>
+
+      <view class="card block section-gap">
+        <view class="title">处理日志</view>
+        <view class="log" wx:for="{{detail.logs}}" wx:key="index">
+          <view class="dot"></view>
+          <view class="content">
+            <view class="text">{{item.status}}</view>
+            <view class="time">{{item.time}}</view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+</page-shell>

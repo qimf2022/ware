@@ -1,0 +1,22 @@
+<page-shell>
+  <view class="container">
+    <state-view wx:if="{{pageState !== 'ready'}}" state="{{pageState}}" emptyText="暂无浏览足迹" />
+
+    <view wx:if="{{pageState === 'ready'}}">
+      <view class="group" wx:for="{{groups}}" wx:key="date">
+        <view class="date">{{item.date}}</view>
+        <view class="card record" wx:for="{{item.items}}" wx:key="id">
+          <image class="cover" src="{{item.image}}" mode="aspectFill" data-id="{{item.id}}" bindtap="onTapProduct" />
+          <view class="body">
+            <view class="title">{{item.title}}</view>
+            <view class="sub">{{item.subtitle}}</view>
+            <view class="row">
+              <text class="price">¥{{item.price}}</text>
+              <view class="add" data-id="{{item.id}}" bindtap="onAddCart">再次加购</view>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+</page-shell>

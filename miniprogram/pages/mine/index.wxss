@@ -1,0 +1,410 @@
+/* 滚动容器 */
+.mine-scroll {
+  height: 100vh;
+  background: #f5f5f5;
+}
+
+/* 页面容器 */
+.mine-page {
+  padding-bottom: 40rpx;
+  min-height: calc(100vh + 1rpx);
+}
+
+/* 顶部背景区 - 与首页banner风格统一 */
+.hero {
+  padding: 40rpx 30rpx 80rpx;
+  background: linear-gradient(135deg, #6B2D5C 0%, #D81E06 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+/* 底部弧度 - 使用伪元素实现更平缓的曲线 */
+.hero-curve {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 60rpx;
+  background: #f5f5f5;
+  border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+  transform: translateY(50%);
+}
+
+/* 装饰圆形 - 左上角 */
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -60rpx;
+  left: -60rpx;
+  width: 240rpx;
+  height: 240rpx;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+/* 装饰圆形 - 右下角 */
+.hero::after {
+  content: '';
+  position: absolute;
+  bottom: -40rpx;
+  right: -40rpx;
+  width: 180rpx;
+  height: 180rpx;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.06);
+}
+
+/* 装饰小圆点 */
+.hero-decor {
+  position: absolute;
+  width: 12rpx;
+  height: 12rpx;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.hero-decor-1 {
+  top: 120rpx;
+  right: 140rpx;
+}
+
+.hero-decor-2 {
+  top: 180rpx;
+  right: 80rpx;
+  width: 8rpx;
+  height: 8rpx;
+}
+
+.hero-decor-3 {
+  bottom: 80rpx;
+  left: 100rpx;
+  width: 6rpx;
+  height: 6rpx;
+}
+
+.hero-top {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  height: 60rpx;
+}
+
+.hero-title {
+  color: #fff;
+  font-size: 36rpx;
+  font-weight: 500;
+}
+
+.top-actions {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  gap: 4rpx;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 30rpx;
+  padding: 6rpx 12rpx;
+  backdrop-filter: blur(4rpx);
+}
+
+.action-btn {
+  width: 48rpx;
+  height: 48rpx;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28rpx;
+}
+
+/* 用户信息区 */
+.user-row {
+  margin-top: 40rpx;
+  display: flex;
+  align-items: center;
+}
+
+.avatar-wrap {
+  position: relative;
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.3);
+  padding: 6rpx;
+  box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.15);
+}
+
+.avatar {
+  width: 108rpx;
+  height: 108rpx;
+  border-radius: 50%;
+  background: #fff;
+  color: #8b1a8f;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 48rpx;
+  font-weight: 600;
+  border: 4rpx solid #fff;
+}
+
+.user-meta {
+  margin-left: 24rpx;
+  display: flex;
+  flex-direction: column;
+  gap: 12rpx;
+}
+
+.nickname {
+  color: #fff;
+  font-size: 40rpx;
+  font-weight: 600;
+}
+
+.login-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 160rpx;
+  height: 52rpx;
+  padding: 0 20rpx;
+  border-radius: 28rpx;
+  background: rgba(255, 255, 255, 0.92);
+  color: #d81e06;
+  font-size: 24rpx;
+  font-weight: 500;
+}
+
+.login-btn.legacy {
+  margin: 0;
+  border: 0;
+  line-height: 52rpx;
+}
+
+.login-btn.legacy::after {
+  border: 0;
+}
+
+/* 品牌标题 */
+.brand-title {
+  margin: 30rpx 0;
+  text-align: center;
+  color: #666;
+  font-size: 32rpx;
+  font-weight: 500;
+}
+
+/* 卡片通用样式 */
+.card {
+  margin: 0 24rpx;
+  background: #fff;
+  border-radius: 16rpx;
+  box-shadow: 0 2rpx 12rpx rgba(0, 0, 0, 0.06);
+}
+
+.section-gap {
+  margin-top: 24rpx;
+}
+
+/* 统计区 */
+.stat-card {
+  display: flex;
+  align-items: center;
+  padding: 30rpx 20rpx;
+}
+
+.stat-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.stat-num {
+  font-size: 48rpx;
+  color: #333;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.stat-label-wrap {
+  margin-top: 12rpx;
+  display: flex;
+  align-items: center;
+  gap: 8rpx;
+}
+
+.stat-icon {
+  font-size: 24rpx;
+  color: #999;
+}
+
+.stat-label {
+  color: #999;
+  font-size: 26rpx;
+}
+
+.divider {
+  width: 2rpx;
+  height: 80rpx;
+  background: #eee;
+}
+
+/* 我的订单 */
+.order-card {
+  padding: 24rpx;
+}
+
+.section-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.section-title {
+  color: #333;
+  font-size: 32rpx;
+  font-weight: 600;
+}
+
+.more {
+  color: #999;
+  font-size: 26rpx;
+  display: flex;
+  align-items: center;
+}
+
+.order-grid {
+  margin-top: 30rpx;
+  display: flex;
+  justify-content: space-around;
+}
+
+.order-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-width: 100rpx;
+}
+
+.order-icon {
+  width: 64rpx;
+  height: 64rpx;
+  font-size: 48rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 12rpx;
+}
+
+.order-label {
+  color: #666;
+  font-size: 24rpx;
+}
+
+/* 资产卡 */
+.asset-card {
+  display: flex;
+  align-items: center;
+  padding: 30rpx 20rpx;
+}
+
+.asset-item {
+  flex: 1;
+  text-align: center;
+}
+
+.asset-num {
+  font-size: 44rpx;
+  color: #333;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.asset-label-wrap {
+  margin-top: 12rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8rpx;
+}
+
+.asset-icon {
+  font-size: 24rpx;
+  color: #999;
+}
+
+.asset-label {
+  color: #999;
+  font-size: 24rpx;
+}
+
+/* 服务入口 */
+.service-card {
+  display: flex;
+  padding: 30rpx 20rpx;
+}
+
+.service-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.service-icon {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 40rpx;
+  margin-bottom: 16rpx;
+}
+
+.service-icon.orange {
+  background: #fff8f0;
+  color: #ff9500;
+}
+
+.service-icon.red {
+  background: #fff5f5;
+  color: #ff4d4f;
+}
+
+.service-icon.purple {
+  background: #f5f0ff;
+  color: #722ed1;
+}
+
+.service-icon.green {
+  background: #f0fff5;
+  color: #52c41a;
+}
+
+.service-label {
+  color: #666;
+  font-size: 24rpx;
+}
+
+/* 底部技术支持 */
+.support {
+  margin-top: 60rpx;
+  text-align: center;
+}
+
+.support-title {
+  color: #999;
+  font-size: 24rpx;
+}
+
+/* 底部占位 */
+.bottom-placeholder {
+  height: 40rpx;
+}

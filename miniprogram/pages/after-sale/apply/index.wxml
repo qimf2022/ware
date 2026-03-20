@@ -1,0 +1,26 @@
+<page-shell>
+  <view class="container">
+    <view class="card block">
+      <view class="label">关联订单</view>
+      <view class="order-no">{{orderNo || orderId}}</view>
+      <view class="amount">预计退款：¥{{refundAmount}}</view>
+    </view>
+
+    <view class="card block section-gap">
+      <view class="label">售后类型</view>
+      <view class="types">
+        <view class="type {{type === '退款' ? 'active' : ''}}" data-type="退款" bindtap="onChangeType">退款</view>
+        <view class="type {{type === '退货退款' ? 'active' : ''}}" data-type="退货退款" bindtap="onChangeType">退货退款</view>
+        <view class="type {{type === '换货' ? 'active' : ''}}" data-type="换货" bindtap="onChangeType">换货</view>
+      </view>
+    </view>
+
+    <view class="card block section-gap">
+      <view class="label">售后原因</view>
+      <input class="input" placeholder="请填写售后原因" bindinput="onInputReason" value="{{reason}}" />
+      <textarea class="textarea" placeholder="补充说明（选填）" bindinput="onInputDesc" value="{{desc}}" />
+    </view>
+
+    <view class="submit-btn ui-btn ui-btn--danger" bindtap="onSubmit">提交申请</view>
+  </view>
+</page-shell>

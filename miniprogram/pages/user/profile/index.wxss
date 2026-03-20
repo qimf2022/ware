@@ -1,0 +1,99 @@
+.profile-page {
+  min-height: 100vh;
+  background: #f5f5f5;
+}
+
+.group {
+  background: #fff;
+  padding-left: 30rpx;
+}
+
+.group + .group {
+  margin-top: 20rpx;
+}
+
+.row {
+  height: 110rpx;
+  padding-right: 30rpx;
+  border-bottom: 1rpx solid #e5e5e5;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.row:last-child {
+  border-bottom: 0;
+}
+
+.label {
+  color: #1a1a1a;
+  font-size: 32rpx;
+}
+
+.right {
+  display: flex;
+  align-items: center;
+  gap: 8rpx;
+}
+
+.value {
+  color: #999;
+  font-size: 30rpx;
+}
+
+.placeholder {
+  color: #ccc;
+}
+
+.arrow {
+  color: #c0c0c0;
+  font-size: 32rpx;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+.avatar {
+  width: 84rpx;
+  height: 84rpx;
+  border-radius: 50%;
+  background: #f2f2f2;
+}
+
+.avatar.empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #bbb;
+  font-size: 36rpx;
+}
+
+.row-picker picker {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.row-picker .right {
+  justify-content: flex-end;
+}
+
+.logout-wrap {
+  margin-top: 100rpx;
+  padding: 0 30rpx;
+}
+
+.logout {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 96rpx;
+  background: #fff;
+  border-radius: 12rpx;
+  color: #333;
+  font-size: 32rpx;
+  gap: 12rpx;
+}
+
+.logout-icon {
+  font-size: 32rpx;
+  color: #666;
+}

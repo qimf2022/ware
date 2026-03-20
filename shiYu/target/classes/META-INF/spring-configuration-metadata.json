@@ -1,0 +1,332 @@
+{
+  "groups": [
+    {
+      "name": "app.idempotency",
+      "type": "com.shiyu.backend.config.AppIdempotencyProperties",
+      "sourceType": "com.shiyu.backend.config.AppIdempotencyProperties"
+    },
+    {
+      "name": "app.jwt",
+      "type": "com.shiyu.backend.config.AppJwtProperties",
+      "sourceType": "com.shiyu.backend.config.AppJwtProperties"
+    },
+    {
+      "name": "app.logistics",
+      "type": "com.shiyu.backend.config.AppLogisticsProperties",
+      "sourceType": "com.shiyu.backend.config.AppLogisticsProperties"
+    },
+    {
+      "name": "app.public-config",
+      "type": "com.shiyu.backend.config.AppPublicConfigProperties",
+      "sourceType": "com.shiyu.backend.config.AppPublicConfigProperties"
+    },
+    {
+      "name": "app.public-config.about",
+      "type": "com.shiyu.backend.config.AppPublicConfigProperties$About",
+      "sourceType": "com.shiyu.backend.config.AppPublicConfigProperties",
+      "sourceMethod": "public com.shiyu.backend.config.AppPublicConfigProperties.About getAbout() "
+    },
+    {
+      "name": "app.public-config.brand",
+      "type": "com.shiyu.backend.config.AppPublicConfigProperties$Brand",
+      "sourceType": "com.shiyu.backend.config.AppPublicConfigProperties",
+      "sourceMethod": "public com.shiyu.backend.config.AppPublicConfigProperties.Brand getBrand() "
+    },
+    {
+      "name": "app.public-config.service",
+      "type": "com.shiyu.backend.config.AppPublicConfigProperties$ServiceInfo",
+      "sourceType": "com.shiyu.backend.config.AppPublicConfigProperties",
+      "sourceMethod": "public com.shiyu.backend.config.AppPublicConfigProperties.ServiceInfo getService() "
+    },
+    {
+      "name": "app.rabbit",
+      "type": "com.shiyu.backend.config.AppRabbitMqProperties",
+      "sourceType": "com.shiyu.backend.config.AppRabbitMqProperties"
+    },
+    {
+      "name": "app.rate-limit",
+      "type": "com.shiyu.backend.config.AppRateLimitProperties",
+      "sourceType": "com.shiyu.backend.config.AppRateLimitProperties"
+    },
+    {
+      "name": "app.redis-key",
+      "type": "com.shiyu.backend.config.AppRedisKeyProperties",
+      "sourceType": "com.shiyu.backend.config.AppRedisKeyProperties"
+    },
+    {
+      "name": "app.signature",
+      "type": "com.shiyu.backend.config.AppSignatureProperties",
+      "sourceType": "com.shiyu.backend.config.AppSignatureProperties"
+    }
+  ],
+  "properties": [
+    {
+      "name": "app.idempotency.default-expire-seconds",
+      "type": "java.lang.Long",
+      "description": "默认幂等过期时间（秒）。",
+      "sourceType": "com.shiyu.backend.config.AppIdempotencyProperties"
+    },
+    {
+      "name": "app.idempotency.enabled",
+      "type": "java.lang.Boolean",
+      "description": "是否启用幂等控制。",
+      "sourceType": "com.shiyu.backend.config.AppIdempotencyProperties"
+    },
+    {
+      "name": "app.idempotency.storage",
+      "type": "java.lang.String",
+      "description": "可选值: memory \/ redis",
+      "sourceType": "com.shiyu.backend.config.AppIdempotencyProperties"
+    },
+    {
+      "name": "app.jwt.expire-seconds",
+      "type": "java.lang.Long",
+      "description": "Token 过期时间（秒）。",
+      "sourceType": "com.shiyu.backend.config.AppJwtProperties"
+    },
+    {
+      "name": "app.jwt.secret",
+      "type": "java.lang.String",
+      "description": "JWT 签名密钥。",
+      "sourceType": "com.shiyu.backend.config.AppJwtProperties"
+    },
+    {
+      "name": "app.logistics.enabled",
+      "type": "java.lang.Boolean",
+      "description": "是否开启三方轨迹拉取，关闭时使用本地模拟轨迹。",
+      "sourceType": "com.shiyu.backend.config.AppLogisticsProperties"
+    },
+    {
+      "name": "app.logistics.kuaidi100-customer",
+      "type": "java.lang.String",
+      "description": "快递100 customer。",
+      "sourceType": "com.shiyu.backend.config.AppLogisticsProperties"
+    },
+    {
+      "name": "app.logistics.kuaidi100-key",
+      "type": "java.lang.String",
+      "description": "快递100 key。",
+      "sourceType": "com.shiyu.backend.config.AppLogisticsProperties"
+    },
+    {
+      "name": "app.logistics.kuaidiniao-app-key",
+      "type": "java.lang.String",
+      "description": "快递鸟 appKey。",
+      "sourceType": "com.shiyu.backend.config.AppLogisticsProperties"
+    },
+    {
+      "name": "app.logistics.kuaidiniao-ebusiness-id",
+      "type": "java.lang.String",
+      "description": "快递鸟 EBusinessID。",
+      "sourceType": "com.shiyu.backend.config.AppLogisticsProperties"
+    },
+    {
+      "name": "app.logistics.provider",
+      "type": "java.lang.String",
+      "description": "轨迹服务商：kuaidi100 \/ kuaidiniao。",
+      "sourceType": "com.shiyu.backend.config.AppLogisticsProperties"
+    },
+    {
+      "name": "app.public-config.about.after-sale-policy",
+      "type": "java.lang.String",
+      "sourceType": "com.shiyu.backend.config.AppPublicConfigProperties$About"
+    },
+    {
+      "name": "app.public-config.about.introduction",
+      "type": "java.lang.String",
+      "sourceType": "com.shiyu.backend.config.AppPublicConfigProperties$About"
+    },
+    {
+      "name": "app.public-config.about.shipping-policy",
+      "type": "java.lang.String",
+      "sourceType": "com.shiyu.backend.config.AppPublicConfigProperties$About"
+    },
+    {
+      "name": "app.public-config.brand.logo",
+      "type": "java.lang.String",
+      "sourceType": "com.shiyu.backend.config.AppPublicConfigProperties$Brand"
+    },
+    {
+      "name": "app.public-config.brand.name",
+      "type": "java.lang.String",
+      "sourceType": "com.shiyu.backend.config.AppPublicConfigProperties$Brand"
+    },
+    {
+      "name": "app.public-config.brand.phone",
+      "type": "java.lang.String",
+      "sourceType": "com.shiyu.backend.config.AppPublicConfigProperties$Brand"
+    },
+    {
+      "name": "app.public-config.brand.promise",
+      "type": "java.lang.String",
+      "sourceType": "com.shiyu.backend.config.AppPublicConfigProperties$Brand"
+    },
+    {
+      "name": "app.public-config.cache-ttl-seconds",
+      "type": "java.lang.Long",
+      "description": "公共配置缓存秒数。",
+      "sourceType": "com.shiyu.backend.config.AppPublicConfigProperties"
+    },
+    {
+      "name": "app.public-config.cdn-base-url",
+      "type": "java.lang.String",
+      "description": "CDN 基础地址。",
+      "sourceType": "com.shiyu.backend.config.AppPublicConfigProperties"
+    },
+    {
+      "name": "app.public-config.service.phone",
+      "type": "java.lang.String",
+      "sourceType": "com.shiyu.backend.config.AppPublicConfigProperties$ServiceInfo"
+    },
+    {
+      "name": "app.public-config.service.wechat",
+      "type": "java.lang.String",
+      "sourceType": "com.shiyu.backend.config.AppPublicConfigProperties$ServiceInfo"
+    },
+    {
+      "name": "app.rabbit.exchange-dlx",
+      "type": "java.lang.String",
+      "description": "死信交换机（topic）。",
+      "sourceType": "com.shiyu.backend.config.AppRabbitMqProperties"
+    },
+    {
+      "name": "app.rabbit.exchange-notify",
+      "type": "java.lang.String",
+      "description": "通知交换机（topic）。",
+      "sourceType": "com.shiyu.backend.config.AppRabbitMqProperties"
+    },
+    {
+      "name": "app.rabbit.exchange-order",
+      "type": "java.lang.String",
+      "description": "订单事件交换机（topic）。",
+      "sourceType": "com.shiyu.backend.config.AppRabbitMqProperties"
+    },
+    {
+      "name": "app.rabbit.exchange-pay",
+      "type": "java.lang.String",
+      "description": "支付回调交换机（direct）。",
+      "sourceType": "com.shiyu.backend.config.AppRabbitMqProperties"
+    },
+    {
+      "name": "app.rabbit.order-timeout-ttl-ms",
+      "type": "java.lang.Long",
+      "description": "未支付订单超时毫秒数，默认 30 分钟。",
+      "sourceType": "com.shiyu.backend.config.AppRabbitMqProperties"
+    },
+    {
+      "name": "app.rabbit.queue-after-sale-refund-compensate",
+      "type": "java.lang.String",
+      "description": "售后退款补偿队列。",
+      "sourceType": "com.shiyu.backend.config.AppRabbitMqProperties"
+    },
+    {
+      "name": "app.rabbit.queue-dlq-notify",
+      "type": "java.lang.String",
+      "description": "通知死信队列。",
+      "sourceType": "com.shiyu.backend.config.AppRabbitMqProperties"
+    },
+    {
+      "name": "app.rabbit.queue-dlq-order",
+      "type": "java.lang.String",
+      "description": "订单死信队列。",
+      "sourceType": "com.shiyu.backend.config.AppRabbitMqProperties"
+    },
+    {
+      "name": "app.rabbit.queue-dlq-pay",
+      "type": "java.lang.String",
+      "description": "支付死信队列。",
+      "sourceType": "com.shiyu.backend.config.AppRabbitMqProperties"
+    },
+    {
+      "name": "app.rabbit.queue-notify-sms",
+      "type": "java.lang.String",
+      "description": "短信通知队列。",
+      "sourceType": "com.shiyu.backend.config.AppRabbitMqProperties"
+    },
+    {
+      "name": "app.rabbit.queue-notify-wx",
+      "type": "java.lang.String",
+      "description": "微信通知队列。",
+      "sourceType": "com.shiyu.backend.config.AppRabbitMqProperties"
+    },
+    {
+      "name": "app.rabbit.queue-order-timeout-consume",
+      "type": "java.lang.String",
+      "description": "订单超时消费队列。",
+      "sourceType": "com.shiyu.backend.config.AppRabbitMqProperties"
+    },
+    {
+      "name": "app.rabbit.queue-order-timeout-delay",
+      "type": "java.lang.String",
+      "description": "订单超时延迟队列。",
+      "sourceType": "com.shiyu.backend.config.AppRabbitMqProperties"
+    },
+    {
+      "name": "app.rabbit.queue-pay-callback",
+      "type": "java.lang.String",
+      "description": "支付回调队列。",
+      "sourceType": "com.shiyu.backend.config.AppRabbitMqProperties"
+    },
+    {
+      "name": "app.rate-limit.cleanup-threshold",
+      "type": "java.lang.Integer",
+      "description": "内存计数器清理阈值。",
+      "sourceType": "com.shiyu.backend.config.AppRateLimitProperties"
+    },
+    {
+      "name": "app.rate-limit.enabled",
+      "type": "java.lang.Boolean",
+      "description": "是否启用限流。",
+      "sourceType": "com.shiyu.backend.config.AppRateLimitProperties"
+    },
+    {
+      "name": "app.rate-limit.read-max-requests-per-window",
+      "type": "java.lang.Integer",
+      "description": "读请求窗口限额。",
+      "sourceType": "com.shiyu.backend.config.AppRateLimitProperties"
+    },
+    {
+      "name": "app.rate-limit.window-seconds",
+      "type": "java.lang.Long",
+      "description": "窗口时长（秒）。",
+      "sourceType": "com.shiyu.backend.config.AppRateLimitProperties"
+    },
+    {
+      "name": "app.rate-limit.write-max-requests-per-window",
+      "type": "java.lang.Integer",
+      "description": "写请求窗口限额。",
+      "sourceType": "com.shiyu.backend.config.AppRateLimitProperties"
+    },
+    {
+      "name": "app.redis-key.env",
+      "type": "java.lang.String",
+      "description": "环境标识，如 dev\/test\/prod。",
+      "sourceType": "com.shiyu.backend.config.AppRedisKeyProperties"
+    },
+    {
+      "name": "app.redis-key.namespace",
+      "type": "java.lang.String",
+      "description": "统一业务前缀，如 shiyu。",
+      "sourceType": "com.shiyu.backend.config.AppRedisKeyProperties"
+    },
+    {
+      "name": "app.signature.enabled",
+      "type": "java.lang.Boolean",
+      "description": "是否启用签名校验。",
+      "sourceType": "com.shiyu.backend.config.AppSignatureProperties"
+    },
+    {
+      "name": "app.signature.expire-seconds",
+      "type": "java.lang.Long",
+      "description": "签名允许时间窗（秒）。",
+      "sourceType": "com.shiyu.backend.config.AppSignatureProperties"
+    },
+    {
+      "name": "app.signature.secret",
+      "type": "java.lang.String",
+      "description": "签名密钥。",
+      "sourceType": "com.shiyu.backend.config.AppSignatureProperties"
+    }
+  ],
+  "hints": []
+}

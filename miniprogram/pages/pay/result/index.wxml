@@ -1,0 +1,12 @@
+<page-shell>
+  <view class="container result-wrap">
+    <view class="card box">
+      <view class="icon {{status === 'success' ? 'ok' : 'fail'}}">{{status === 'success' ? '✓' : '×'}}</view>
+      <view class="title">{{status === 'success' ? '支付成功' : '支付失败'}}</view>
+      <view class="desc">订单号：{{orderNo || '暂无'}}</view>
+      <view class="btn primary ui-btn ui-btn--primary" bindtap="onViewOrder">查看订单</view>
+      <view class="btn ui-btn ui-btn--secondary" bindtap="onViewOrderList">订单列表</view>
+      <view class="btn ui-btn ui-btn--secondary" bindtap="onContinueShopping">继续逛逛</view>
+    </view>
+  </view>
+</page-shell>

@@ -1,0 +1,100 @@
+spring:
+  application:
+    name: shiyu-backend
+  profiles:
+    active: dev
+  redis:
+    host: 192.168.134.135
+    port: 6379
+    timeout: 3000ms
+    password: 123321
+  rabbitmq:
+    host: 192.168.134.136
+    port: 5672
+    username: admin
+    password: 123456
+    publisher-confirm-type: correlated
+    publisher-returns: true
+    template:
+      mandatory: true
+    listener:
+      simple:
+        acknowledge-mode: manual
+        default-requeue-rejected: false
+
+server:
+  port: 8083
+
+app:
+  jwt:
+    secret: shiyu-home-jwt-secret-key-2026
+    expire-seconds: 604800
+  signature:
+    enabled: true
+    secret: shiyu-signature-key-2026
+    expire-seconds: 300
+  idempotency:
+    enabled: true
+    default-expire-seconds: 5
+    storage: redis
+  rate-limit:
+    enabled: true
+    window-seconds: 60
+    read-max-requests-per-window: 120
+    write-max-requests-per-window: 30
+    cleanup-threshold: 20000
+  redis-key:
+    namespace: shiyu
+    env: dev
+  rabbit:
+    exchange-order: ex.order
+    exchange-pay: ex.pay
+    exchange-notify: ex.notify
+    exchange-dlx: ex.dlx
+    queue-pay-callback: q.pay.callback
+    queue-order-timeout-delay: q.order.timeout.delay
+    queue-order-timeout-consume: q.order.timeout.consume
+    queue-notify-sms: q.notify.sms
+    queue-notify-wx: q.notify.wx
+    queue-after-sale-refund-compensate: q.aftersale.refund.compensate
+    queue-dlq-pay: q.dlq.pay
+    queue-dlq-order: q.dlq.order
+    queue-dlq-notify: q.dlq.notify
+    order-timeout-ttl-ms: 1800000
+  logistics:
+    provider: kuaidi100
+    enabled: false
+    kuaidi100-customer: ""
+    kuaidi100-key: ""
+    kuaidiniao-ebusiness-id: ""
+    kuaidiniao-app-key: ""
+  public-config:
+    cdn-base-url: https://cdn.shiyuhome.com
+    cache-ttl-seconds: 60
+    brand:
+      name: 诗语家居
+      logo: https://cdn.shiyuhome.com/logo.png
+      phone: "15204083071"
+      promise: 48小时内发货
+    service:
+      phone: "15204083071"
+      wechat: shiyu_service
+    about:
+      introduction: 诗语家居专注于高品质家纺产品...
+      shipping-policy: 订单支付成功后48小时内发货...
+      after-sale-policy: 支持7天无理由退货...
+
+wx:
+  miniapp:
+    configs:
+      - appid: wxebd867bba79a7365
+        secret: 9c73258d350440ec099ce1b730dcfec4
+        token: ""
+        aesKey: ""
+        msgDataFormat: JSON
+
+logging:
+  level:
+    root: INFO
+    com.shiyu.backend: INFO
+

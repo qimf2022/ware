@@ -1,0 +1,16 @@
+server:
+  port: 8083
+
+app:
+  signature:
+    enabled: true
+  idempotency:
+    enabled: true
+    storage: redis
+  redis-key:
+    env: prod
+
+logging:
+  level:
+    root: WARN
+    com.shiyu.backend: INFO

@@ -1,0 +1,44 @@
+<page-shell>
+  <view class="container">
+    <view class="search-bar card">
+      <input class="input" placeholder="搜索床品、被芯、枕类" value="{{keyword}}" bindinput="onInputKeyword" confirm-type="search" bindconfirm="onSearch" />
+      <view class="search-btn ui-btn ui-btn--primary" bindtap="onSearch">搜索</view>
+    </view>
+
+    <view wx:if="{{!hasSearched}}">
+      <view class="section-gap panel card">
+        <view class="panel-title">热门搜索</view>
+        <view class="chips">
+          <view class="chip" wx:for="{{hotKeywords}}" wx:key="*this" data-keyword="{{item}}" bindtap="onTapHot">{{item}}</view>
+        </view>
+      </view>
+
+      <view class="section-gap panel card" wx:if="{{historyKeywords.length}}">
+        <view class="panel-title row-between">
+          <text>历史搜索</text>
+          <text class="clear" bindtap="onClearHistory">清空</text>
+        </view>
+        <view class="chips">
+          <view class="chip" wx:for="{{historyKeywords}}" wx:key="*this" data-keyword="{{item}}" bindtap="onTapHistory">{{item}}</view>
+        </view>
+      </view>
+    </view>
+
+    <state-view wx:if="{{hasSearched && pageState !== 'ready'}}" state="empty" emptyText="未找到相关商品" />
+
+    <view class="result-list" wx:if="{{hasSearched && pageState === 'ready'}}">
+      <view class="card result-item" wx:for="{{resultList}}" wx:key="id" data-id="{{item.id}}" bindtap="onTapResult">
+        <image class="cover" src="{{item.image}}" mode="aspectFill" />
+        <view class="info">
+          <view class="title">{{item.title}}</view>
+          <view class="sub">{{item.subtitle}}</view>
+          <view class="meta">{{item.category}} · 已售{{item.soldCount}}</view>
+          <view>
+            <text class="price">¥{{item.price}}</text>
+            <text class="origin">¥{{item.originPrice}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+</page-shell>

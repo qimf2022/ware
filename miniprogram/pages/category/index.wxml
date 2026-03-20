@@ -1,0 +1,161 @@
+<page-shell>
+  <view class="container category-page">
+    <view class="top-search card" bindtap="onTapSearch">搜索家纺商品</view>
+
+    <view class="toolbar section-gap card">
+      <view class="sort {{sortType === 'default' ? 'active' : ''}}" data-type="default" bindtap="onSelectSort">综合</view>
+      <view class="sort {{sortType === 'priceAsc' ? 'active' : ''}}" data-type="priceAsc" bindtap="onSelectSort">价格↑</view>
+      <view class="sort {{sortType === 'priceDesc' ? 'active' : ''}}" data-type="priceDesc" bindtap="onSelectSort">价格↓</view>
+      <view class="sort {{sortType === 'soldDesc' ? 'active' : ''}}" data-type="soldDesc" bindtap="onSelectSort">销量</view>
+      <view class="filter-btn ui-btn ui-btn--secondary" bindtap="onToggleFilter">筛选</view>
+    </view>
+
+    <view class="main section-gap">
+      <scroll-view class="left-nav card" scroll-y="true">
+        <view
+          class="nav-item {{activeIndex === index ? 'active' : ''}}"
+          wx:for="{{categories}}"
+          wx:key="*this"
+          data-index="{{index}}"
+          bindtap="onChangeCategory"
+        >
+          {{item}}
+        </view>
+      </scroll-view>
+
+      <view class="right-box">
+        <state-view wx:if="{{pageState !== 'ready'}}" state="{{pageState}}" emptyText="当前分类暂无商品" bind:retry="onRetry" />
+
+        <scroll-view wx:if="{{pageState === 'ready'}}" class="right-list" scroll-y="true">
+          <product-card
+            wx:for="{{products}}"
+            wx:key="id"
+            layout="row"
+            product="{{item}}"
+            bind:tap="onTapProduct"
+            bind:addcart="onAddCart"
+          />
+        </scroll-view>
+      </view>
+    </view>
+
+    <view wx:if="{{filterPanelVisible}}" class="filter-mask" bindtap="onToggleFilter"></view>
+    <view wx:if="{{filterPanelVisible}}" class="filter-panel">
+      <view class="panel-title">筛选条件</view>
+      <view class="group">
+        <view class="group-title">尺寸</view>
+        <view class="chips">
+          <view
+            class="chip {{filterSelections.size === item ? 'active' : ''}}"
+            wx:for="{{filterOptions.size}}"
+            wx:key="*this"
+            data-key="size"
+            data-value="{{item}}"
+            bindtap="onSelectFilter"
+          >
+            {{item}}
+          </view>
+        </view>
+      </view>
+
+      <view class="group">
+        <view class="group-title">材质</view>
+        <view class="chips">
+          <view
+            class="chip {{filterSelections.material === item ? 'active' : ''}}"
+            wx:for="{{filterOptions.material}}"
+            wx:key="*this"
+            data-key="material"
+            data-value="{{item}}"
+            bindtap="onSelectFilter"
+          >
+            {{item}}
+          </view>
+        </view>
+      </view>
+
+      <view class="group">
+        <view class="group-title">价格区间</view>
+        <view class="chips">
+          <view
+            class="chip {{filterSelections.price === item ? 'active' : ''}}"
+            wx:for="{{filterOptions.price}}"
+            wx:key="*this"
+            data-key="price"
+            data-value="{{item}}"
+            bindtap="onSelectFilter"
+          >
+            {{item}}
+          </view>
+        </view>
+      </view>
+
+      <view class="panel-actions">
+        <view class="ghost ui-btn ui-btn--secondary" bindtap="onResetFilter">重置</view>
+        <view class="primary ui-btn ui-btn--primary" bindtap="onConfirmFilter">确定</view>
+      </view>
+    </view>
+
+    <view wx:if="{{addCartPopupVisible}}" class="sku-mask" bindtap="onCloseAddCartPopup"></view>
+    <view wx:if="{{addCartPopupVisible}}" class="sku-popup" catchtap="onTapAddCartPopupPanel">
+      <view wx:if="{{addCartPopupLoading}}" class="sku-loading">规格加载中...</view>
+
+      <block wx:else>
+        <view class="sku-head">
+          <image class="sku-cover" src="{{(popupCurrentSku && popupCurrentSku.image) || (popupProduct && popupProduct.image)}}" mode="aspectFill" />
+          <view class="sku-info">
+            <view class="sku-price">¥{{(popupCurrentSku && popupCurrentSku.price) || (popupProduct && popupProduct.price)}}</view>
+            <view class="sku-stock">库存：{{(popupCurrentSku && popupCurrentSku.stock) || 0}}</view>
+          </view>
+          <view class="sku-close" bindtap="onCloseAddCartPopup">×</view>
+        </view>
+
+        <view class="sku-section" wx:if="{{popupSpecs.size.length}}">
+          <view class="sku-title">尺寸</view>
+          <view class="sku-chips">
+            <view
+              class="sku-chip {{popupSelectedSpecs.size === item ? 'active' : ''}} {{popupDisabledMap.size[item] ? 'disabled' : ''}}"
+              wx:for="{{popupSpecs.size}}"
+              wx:key="*this"
+              data-key="size"
+              data-value="{{item}}"
+              bindtap="onSelectPopupSpec"
+            >
+              {{item}}
+            </view>
+          </view>
+        </view>
+
+        <view class="sku-section" wx:if="{{popupSpecs.material.length > 1}}">
+          <view class="sku-title">材质</view>
+          <view class="sku-chips">
+            <view
+              class="sku-chip {{popupSelectedSpecs.material === item ? 'active' : ''}} {{popupDisabledMap.material[item] ? 'disabled' : ''}}"
+              wx:for="{{popupSpecs.material}}"
+              wx:key="*this"
+              data-key="material"
+              data-value="{{item}}"
+              bindtap="onSelectPopupSpec"
+            >
+              {{item}}
+            </view>
+          </view>
+        </view>
+
+        <view class="sku-qty-row">
+          <view class="sku-title">数量</view>
+          <view class="sku-qty-box">
+            <view class="sku-qty-btn {{popupQuantity <= 1 ? 'disabled' : ''}}" data-type="dec" bindtap="onChangePopupQty">－</view>
+            <view class="sku-qty-value">{{popupQuantity}}</view>
+            <view class="sku-qty-btn {{((popupCurrentSku && popupCurrentSku.stock) || 0) <= 0 || popupQuantity >= ((popupCurrentSku && popupCurrentSku.stock) || 0) ? 'disabled' : ''}}" data-type="inc" bindtap="onChangePopupQty">＋</view>
+          </view>
+        </view>
+
+        <view class="sku-actions">
+          <view class="sku-add {{addCartSubmitting || addCartPopupLoading || !popupCurrentSku || ((popupCurrentSku && popupCurrentSku.stock) || 0) <= 0 ? 'disabled' : ''}}" bindtap="onConfirmPopupAddCart">{{addCartSubmitting && popupSubmitAction === 'add' ? '加入中...' : '加入购物车'}}</view>
+          <view class="sku-buy {{addCartSubmitting || addCartPopupLoading || !popupCurrentSku || ((popupCurrentSku && popupCurrentSku.stock) || 0) <= 0 ? 'disabled' : ''}}" bindtap="onPopupBuyNow">{{addCartSubmitting && popupSubmitAction === 'buy' ? '前往中...' : '立即购买'}}</view>
+        </view>
+      </block>
+    </view>
+  </view>
+</page-shell>

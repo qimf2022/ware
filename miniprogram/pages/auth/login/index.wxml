@@ -1,0 +1,10 @@
+<view class="container">
+  <view class="login-box">
+    <button type="primary" class="wx-login-btn" bindtap="onWechatAuthorizeTap" disabled="{{isLogging}}">
+      {{isLogging ? '授权中...' : '微信授权登录'}}
+    </button>
+
+    <button type="default" class="account-login-btn" bindtap="accountLogin">账号登录</button>
+  </view>
+</view>
+

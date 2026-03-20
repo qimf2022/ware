@@ -1,0 +1,18 @@
+<page-shell>
+  <view class="container">
+    <state-view wx:if="{{pageState !== 'ready'}}" state="{{pageState}}" emptyText="暂无相关订单" bind:retry="onRetry" />
+
+    <view wx:if="{{pageState === 'ready'}}" class="list">
+      <view class="card item" wx:for="{{list}}" wx:key="id" data-id="{{item.id}}" bindtap="onTapItem">
+        <view class="top">
+          <view class="no">售后单号：{{item.id}}</view>
+          <view class="status">{{item.status}}</view>
+        </view>
+        <view class="info">
+          <text class="type">{{item.type}}</text>
+          <text class="time">{{item.createdAt}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+</page-shell>

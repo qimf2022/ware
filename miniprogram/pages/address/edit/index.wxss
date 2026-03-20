@@ -1,0 +1,52 @@
+.address-edit-page {
+  min-height: 100vh;
+  padding-bottom: calc(env(safe-area-inset-bottom) + 140rpx);
+}
+
+.form {
+  margin-top: 16rpx;
+  padding: 0 20rpx;
+}
+
+.input {
+  height: 88rpx;
+  border-bottom: 2rpx solid var(--border-color);
+  font-size: 26rpx;
+}
+
+.default-row {
+  height: 100rpx;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: var(--text-secondary);
+  font-size: 24rpx;
+}
+
+.bottom-actions {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 20;
+  background: #fff;
+  padding: 16rpx 20rpx calc(env(safe-area-inset-bottom) + 16rpx);
+}
+
+.save-btn {
+  height: 74rpx;
+  border-radius: 37rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 30rpx;
+  font-weight: 600;
+  color: #fff;
+  background: #ff4d4f;
+}
+
+.save-btn.disabled {
+  opacity: 0.55;
+}
+
+

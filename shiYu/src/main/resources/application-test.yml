@@ -1,0 +1,10 @@
+server:
+  port: 8081
+
+app:
+  redis-key:
+    env: test
+
+logging:
+  level:
+    com.shiyu.backend: INFO

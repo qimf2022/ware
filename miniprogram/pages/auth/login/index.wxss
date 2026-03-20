@@ -1,0 +1,46 @@
+.container {
+  min-height: 100vh;
+  background: #f7f8fa;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40rpx;
+  box-sizing: border-box;
+}
+
+.login-box {
+  width: 100%;
+  max-width: 640rpx;
+  background: #fff;
+  border-radius: 24rpx;
+  box-shadow: 0 12rpx 32rpx rgba(0, 0, 0, 0.06);
+  padding: 56rpx 44rpx;
+  box-sizing: border-box;
+}
+
+.wx-login-btn {
+  background: #07c160;
+  border: none;
+  color: #fff;
+  border-radius: 44rpx;
+  font-size: 30rpx;
+  line-height: 88rpx;
+}
+
+.wx-login-btn::after {
+  border: none;
+}
+
+.account-login-btn {
+  margin-top: 28rpx;
+  background: #f2f3f5;
+  border: none;
+  color: #333;
+  border-radius: 44rpx;
+  font-size: 30rpx;
+  line-height: 88rpx;
+}
+
+.account-login-btn::after {
+  border: none;
+}

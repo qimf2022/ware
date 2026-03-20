@@ -1,0 +1,20 @@
+<page-shell>
+  <view class="container">
+    <view class="hero card">
+      <view class="title">婚嫁专区 · 春日焕新</view>
+      <view class="desc">当季热卖、组合立减、复购补贴一站直达。</view>
+      <view class="btn ui-btn ui-btn--secondary" bindtap="onGoCoupon">立即领券</view>
+    </view>
+
+    <view class="card section-gap panel">
+      <view class="panel-title">活动列表</view>
+      <view class="activity" wx:for="{{campaigns}}" wx:key="id">
+        <view class="name">{{item.title}}</view>
+        <view class="text">{{item.desc}}</view>
+        <view class="hint">{{item.couponHint}}</view>
+      </view>
+    </view>
+
+    <view class="link" bindtap="onGoActivity">查看更多活动 ></view>
+  </view>
+</page-shell>

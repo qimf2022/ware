@@ -1,0 +1,25 @@
+<page-shell>
+  <view class="container">
+    <state-view wx:if="{{pageState !== 'ready'}}" state="{{pageState}}" emptyText="暂无收藏商品" bind:retry="onRetry" />
+
+    <view wx:if="{{pageState === 'ready'}}" class="list">
+      <view class="card item" wx:for="{{list}}" wx:key="id">
+        <image class="cover" src="{{item.image}}" mode="aspectFill" data-id="{{item.id}}" bindtap="onTapProduct" />
+        <view class="content">
+          <view class="title">{{item.title}}</view>
+          <view class="sub">{{item.subtitle}}</view>
+          <view class="bottom">
+            <view>
+              <text class="price">¥{{item.price}}</text>
+              <text class="origin">¥{{item.originPrice}}</text>
+            </view>
+            <view class="btns">
+              <view class="btn ghost ui-btn ui-btn--secondary" data-id="{{item.id}}" bindtap="onRemove">取消收藏</view>
+              <view class="btn ui-btn ui-btn--primary" data-id="{{item.id}}" bindtap="onAddCart">加购</view>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+</page-shell>

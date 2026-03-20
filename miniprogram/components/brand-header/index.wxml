@@ -1,0 +1,7 @@
+<view class="brand card">
+  <image class="logo" src="{{logo}}" mode="aspectFill" />
+  <view class="meta">
+    <view class="name">{{brandName}}</view>
+    <view class="desc">{{slogan}} · TEL: {{tel}}</view>
+  </view>
+</view>

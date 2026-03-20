@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "售后",
+  "usingComponents": {
+    "page-shell": "/components/page-shell/index",
+    "state-view": "/components/state-view/index"
+  }
+}

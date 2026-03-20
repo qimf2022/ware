@@ -1,0 +1,41 @@
+.block {
+  margin-top: 20rpx;
+  padding: 20rpx;
+}
+
+.label {
+  color: var(--text-secondary);
+  font-size: 24rpx;
+}
+
+.input {
+  margin-top: 10rpx;
+  height: 74rpx;
+  border-bottom: 2rpx solid var(--border-color);
+  font-size: 26rpx;
+}
+
+.code-row {
+  display: flex;
+  align-items: center;
+}
+
+.code-input {
+  flex: 1;
+}
+
+.code-btn {
+  margin-left: 18rpx;
+  width: 200rpx;
+  height: 60rpx;
+  border-radius: 30rpx;
+  font-size: 22rpx;
+}
+
+.submit {
+  margin-top: 28rpx;
+  height: 72rpx;
+  border-radius: 36rpx;
+  font-size: 26rpx;
+}
+

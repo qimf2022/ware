@@ -1,0 +1,68 @@
+.block {
+  margin-top: 16rpx;
+  padding: 20rpx;
+}
+
+.label {
+  font-size: 24rpx;
+  color: var(--text-secondary);
+}
+
+.order-no {
+  margin-top: 8rpx;
+  color: var(--text-primary);
+  font-size: 24rpx;
+}
+
+.amount {
+  margin-top: 8rpx;
+  color: var(--brand-primary);
+  font-size: 24rpx;
+}
+
+
+.types {
+  margin-top: 12rpx;
+  display: flex;
+  gap: 12rpx;
+}
+
+.type {
+  height: 56rpx;
+  min-width: 120rpx;
+  padding: 0 16rpx;
+  border: 2rpx solid var(--border-color);
+  border-radius: 28rpx;
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22rpx;
+}
+
+.type.active {
+  border-color: var(--brand-primary);
+  color: var(--brand-primary);
+  background: #fff7f6;
+}
+
+.input {
+  margin-top: 12rpx;
+  height: 72rpx;
+  border-bottom: 2rpx solid var(--border-color);
+  font-size: 24rpx;
+}
+
+.textarea {
+  margin-top: 12rpx;
+  height: 140rpx;
+  font-size: 24rpx;
+}
+
+.submit-btn {
+  margin-top: 24rpx;
+  height: 72rpx;
+  border-radius: 36rpx;
+  font-size: 26rpx;
+}
+

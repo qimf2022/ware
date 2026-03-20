@@ -1,0 +1,63 @@
+.head {
+  margin-top: 20rpx;
+  padding: 24rpx;
+  background: linear-gradient(145deg, #D81E06 0%, #F46F54 100%);
+}
+
+.label {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 24rpx;
+}
+
+.num {
+  margin-top: 8rpx;
+  color: #fff;
+  font-size: 50rpx;
+  font-weight: 700;
+}
+
+.panel {
+  padding: 20rpx;
+}
+
+.title {
+  color: var(--text-primary);
+  font-size: 27rpx;
+  font-weight: 600;
+}
+
+.card-item,
+.record {
+  margin-top: 14rpx;
+  padding-top: 14rpx;
+  border-top: 2rpx solid var(--border-color);
+  display: flex;
+  justify-content: space-between;
+}
+
+.name {
+  color: var(--text-primary);
+  font-size: 24rpx;
+}
+
+.expire {
+  margin-top: 6rpx;
+  color: var(--text-muted);
+  font-size: 21rpx;
+}
+
+.right {
+  text-align: right;
+}
+
+.amount {
+  color: var(--brand-primary);
+  font-size: 26rpx;
+  font-weight: 600;
+}
+
+.status {
+  margin-top: 6rpx;
+  color: #1f9d55;
+  font-size: 21rpx;
+}

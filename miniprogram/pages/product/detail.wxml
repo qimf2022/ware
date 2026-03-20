@@ -1,0 +1,128 @@
+<page-shell>
+  <state-view wx:if="{{pageState !== 'ready'}}" state="{{pageState}}" emptyText="商品信息暂不可用" bind:retry="onRetry" />
+
+  <view class="detail-page" wx:if="{{pageState === 'ready' && product && currentSku}}">
+    <swiper class="gallery" indicator-dots="true" autoplay="true" circular="true">
+      <swiper-item wx:for="{{galleryImages}}" wx:key="*this">
+        <image class="gallery-img" src="{{item}}" mode="aspectFill" />
+      </swiper-item>
+    </swiper>
+
+    <view class="container">
+      <view class="price-box card section-gap">
+        <view>
+          <text class="price">¥{{currentSku.price}}</text>
+          <text class="origin">¥{{currentSku.originPrice}}</text>
+        </view>
+        <view class="muted">{{currentSku.stock}} 库存 · {{(product.soldCount || 0)}} 人想买</view>
+      </view>
+
+      <view class="card section-gap section">
+        <view class="title">{{product.title}}</view>
+        <view class="subtitle">{{product.subtitle}}</view>
+        <view class="sold">已售 {{product.soldCount}} 件</view>
+      </view>
+
+      <view class="card section-gap section select-row" bindtap="onBuyNow">
+        <view class="select-label">选择</view>
+        <view class="select-value">{{selectedSpecs.size}}{{selectedSpecs.material ? '/' + selectedSpecs.material : ''}}</view>
+        <view class="select-arrow">›</view>
+      </view>
+
+      <view class="card section-gap section">
+        <view class="section-title">参数与洗护</view>
+        <view class="desc">面料：A类标准 · 适用季节：四季通用 · 建议冷水轻柔洗涤</view>
+      </view>
+
+      <view class="card section-gap section">
+        <view class="section-title">尺寸助手</view>
+        <view class="chips">
+          <view class="chip {{selectedBedType === '单人床' ? 'active' : ''}}" data-type="单人床" bindtap="onSelectBedType">单人床</view>
+          <view class="chip {{selectedBedType === '标准双人床' ? 'active' : ''}}" data-type="标准双人床" bindtap="onSelectBedType">标准双人床</view>
+          <view class="chip {{selectedBedType === '大床' ? 'active' : ''}}" data-type="大床" bindtap="onSelectBedType">大床</view>
+          <view class="chip {{selectedBedType === '加大床' ? 'active' : ''}}" data-type="加大床" bindtap="onSelectBedType">加大床</view>
+        </view>
+        <view class="assistant-text">{{assistantSuggestion}}</view>
+      </view>
+
+      <view class="section-gap">
+        <view class="section-title recommend-title">搭配推荐</view>
+        <view class="recommend-list">
+          <product-card
+            wx:for="{{recommendProducts}}"
+            wx:key="id"
+            product="{{item}}"
+            bind:tap="onTapRecommend"
+            bind:addcart="onAddRecommendCart"
+          />
+        </view>
+      </view>
+    </view>
+
+    <view class="action-bar">
+      <view class="mini-action" bindtap="onGoHome">首页</view>
+      <view class="mini-action {{product.isFavorited ? 'active' : ''}}" bindtap="onToggleFavorite">{{favoriteLoading ? '处理中' : (product.isFavorited ? '已收藏' : '收藏')}}</view>
+      <view class="ghost-btn" bindtap="onAddCart">加入购物车</view>
+      <view class="primary-btn" bindtap="onBuyNow">立即购买</view>
+    </view>
+
+    <view wx:if="{{skuPopupVisible}}" class="sku-mask" bindtap="onCloseSkuPopup"></view>
+    <view wx:if="{{skuPopupVisible}}" class="sku-popup" catchtap="onTapSkuPopupPanel">
+      <view class="sku-head">
+        <image class="sku-cover" src="{{currentSku.image || product.image}}" mode="aspectFill" />
+        <view class="sku-info">
+          <view class="sku-price">¥{{currentSku.price}}</view>
+          <view class="sku-stock">库存：{{currentSku.stock}}</view>
+        </view>
+        <view class="sku-close" bindtap="onCloseSkuPopup">×</view>
+      </view>
+
+      <view class="sku-section" wx:if="{{specs.size.length}}">
+        <view class="sku-title">{{specs.material.length ? '200x230/标准' : '规格'}}</view>
+        <view class="sku-chips">
+          <view
+            class="sku-chip {{selectedSpecs.size === item ? 'active' : ''}} {{specDisabledMap.size[item] ? 'disabled' : ''}}"
+            wx:for="{{specs.size}}"
+            wx:key="*this"
+            data-key="size"
+            data-value="{{item}}"
+            bindtap="onSelectSpec"
+          >
+            {{item}}
+          </view>
+        </view>
+      </view>
+
+      <view class="sku-section" wx:if="{{specs.material.length > 1}}">
+        <view class="sku-title">下单备注花型</view>
+        <view class="sku-chips">
+          <view
+            class="sku-chip {{selectedSpecs.material === item ? 'active' : ''}} {{specDisabledMap.material[item] ? 'disabled' : ''}}"
+            wx:for="{{specs.material}}"
+            wx:key="*this"
+            data-key="material"
+            data-value="{{item}}"
+            bindtap="onSelectSpec"
+          >
+            {{item}}
+          </view>
+        </view>
+      </view>
+
+      <view class="sku-qty-row">
+        <view class="sku-title">数量</view>
+        <view class="sku-qty-box">
+          <view class="sku-qty-btn {{skuQuantity <= 1 ? 'disabled' : ''}}" data-type="dec" bindtap="onChangeSkuQty">－</view>
+          <view class="sku-qty-value">{{skuQuantity}}</view>
+          <view class="sku-qty-btn {{skuQuantity >= (currentSku.stock || 0) ? 'disabled' : ''}}" data-type="inc" bindtap="onChangeSkuQty">＋</view>
+        </view>
+      </view>
+
+      <view class="sku-actions">
+        <view class="sku-add {{submitLoading ? 'disabled' : ''}}" data-action="add" bindtap="onConfirmSkuAction">{{submitLoading && pendingAction === 'add' ? '加入中...' : '加入购物车'}}</view>
+        <view class="sku-buy {{submitLoading ? 'disabled' : ''}}" data-action="buy" bindtap="onConfirmSkuAction">{{submitLoading && pendingAction === 'buy' ? '支付中...' : '立即购买'}}</view>
+      </view>
+    </view>
+  </view>
+</page-shell>
+
