@@ -87,8 +87,8 @@ app:
 wx:
   miniapp:
     configs:
-      - appid: wxebd867bba79a7365
-        secret: 9c73258d350440ec099ce1b730dcfec4
+      - appid: ""
+        secret: ""
         token: ""
         aesKey: ""
         msgDataFormat: JSON
