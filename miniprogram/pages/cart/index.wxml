@@ -99,5 +99,64 @@
         <view class="checkout-btn {{actionDisabled ? 'disabled' : ''}}" bindtap="onSubmitAction">{{editMode ? '删除' : '去结算'}}</view>
       </view>
     </view>
+
+    <!-- SKU选择弹窗 -->
+    <view wx:if="{{skuPopupVisible}}" class="sku-mask" bindtap="onCloseSkuPopup"></view>
+    <view wx:if="{{skuPopupVisible}}" class="sku-popup" catchtap="onTapSkuPopupPanel">
+      <view class="sku-head">
+        <image class="sku-cover" src="{{(popupCurrentSku && popupCurrentSku.image) || (popupProduct && popupProduct.image)}}" mode="aspectFill" />
+        <view class="sku-info">
+          <view class="sku-price">¥{{popupCurrentSku.price}}</view>
+          <view class="sku-stock">库存：{{popupCurrentSku.stock}}</view>
+        </view>
+        <view class="sku-close" bindtap="onCloseSkuPopup">×</view>
+      </view>
+
+      <view class="sku-section" wx:if="{{popupSpecs.size.length}}">
+        <view class="sku-title">规格</view>
+        <view class="sku-chips">
+          <view
+            class="sku-chip {{popupSelectedSpecs.size === item ? 'active' : ''}} {{popupSpecDisabledMap.size[item] ? 'disabled' : ''}}"
+            wx:for="{{popupSpecs.size}}"
+            wx:key="*this"
+            data-key="size"
+            data-value="{{item}}"
+            bindtap="onSelectPopupSpec"
+          >
+            {{item}}
+          </view>
+        </view>
+      </view>
+
+      <view class="sku-section" wx:if="{{popupSpecs.material.length > 1}}">
+        <view class="sku-title">花型</view>
+        <view class="sku-chips">
+          <view
+            class="sku-chip {{popupSelectedSpecs.material === item ? 'active' : ''}} {{popupSpecDisabledMap.material[item] ? 'disabled' : ''}}"
+            wx:for="{{popupSpecs.material}}"
+            wx:key="*this"
+            data-key="material"
+            data-value="{{item}}"
+            bindtap="onSelectPopupSpec"
+          >
+            {{item}}
+          </view>
+        </view>
+      </view>
+
+      <view class="sku-qty-row">
+        <view class="sku-title">数量</view>
+        <view class="sku-qty-box">
+          <view class="sku-qty-btn {{popupQuantity <= 1 ? 'disabled' : ''}}" data-type="dec" bindtap="onChangePopupQty">－</view>
+          <view class="sku-qty-value">{{popupQuantity}}</view>
+          <view class="sku-qty-btn {{popupQuantity >= (popupCurrentSku.stock || 0) ? 'disabled' : ''}}" data-type="inc" bindtap="onChangePopupQty">＋</view>
+        </view>
+      </view>
+
+      <view class="sku-actions">
+        <view class="sku-add {{submitLoading ? 'disabled' : ''}}" bindtap="onConfirmPopupAddCart">{{submitLoading && pendingAction === 'add' ? '加入中...' : '加入购物车'}}</view>
+        <view class="sku-buy {{submitLoading ? 'disabled' : ''}}" bindtap="onConfirmPopupBuyNow">{{submitLoading && pendingAction === 'buy' ? '支付中...' : '立即购买'}}</view>
+      </view>
+    </view>
   </view>
 </page-shell>

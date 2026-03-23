@@ -42,7 +42,8 @@ Page({
     popupCurrentSku: null,
     popupQuantity: 1,
     pendingAction: 'add',
-    submitLoading: false
+    submitLoading: false,
+    showAuthModal: false
   },
   onLoad() {
     this.productSpecCache = {}
@@ -50,10 +51,43 @@ Page({
   },
   onShow() {
     this.syncTabBar(0)
+    this.checkAuthModalState()
     const app = getApp()
     if (app && typeof app.maybeShowAuthGuide === 'function') {
       app.maybeShowAuthGuide()
     }
+  },
+  /**
+   * 检查授权弹窗状态。
+   */
+  checkAuthModalState() {
+    const app = getApp()
+    if (app && app.globalData) {
+      this.setData({ showAuthModal: !!app.globalData.showAuthModal })
+    }
+  },
+  /**
+   * App 调用的状态变更回调。
+   */
+  onAuthModalStateChange(visible) {
+    this.setData({ showAuthModal: !!visible })
+  },
+  /**
+   * 授权弹窗取消。
+   */
+  onAuthModalCancel() {
+    const app = getApp()
+    if (app && typeof app.hideAuthModal === 'function') {
+      app.hideAuthModal()
+    }
+    this.setData({ showAuthModal: false })
+  },
+  /**
+   * 授权弹窗成功。
+   */
+  onAuthModalSuccess(e) {
+    this.setData({ showAuthModal: false })
+    // 可选：刷新页面数据或更新用户状态
   },
   syncTabBar(index) {
     if (typeof this.getTabBar !== 'function') return
@@ -167,8 +201,14 @@ Page({
     })
   },
   onTapProduct(event) {
-    const { id } = event.detail
-    wx.navigateTo({ url: `/pages/product/detail?id=${id}` })
+    const detailId = event && event.detail ? event.detail.id : ''
+    const datasetId = event && event.currentTarget && event.currentTarget.dataset ? event.currentTarget.dataset.id : ''
+    const productId = String(detailId || datasetId || '').trim()
+    if (!/^\d+$/.test(productId)) {
+      wx.showToast({ title: '商品ID无效', icon: 'none' })
+      return
+    }
+    wx.navigateTo({ url: `/pages/product/detail?id=${productId}` })
   },
   async onAddCart(event) {
     const { id } = event.detail || {}

@@ -209,7 +209,7 @@
   background: #fff;
   z-index: 31;
   border-radius: 24rpx 24rpx 0 0;
-  padding: 24rpx 24rpx calc(24rpx + env(safe-area-inset-bottom));
+  padding: 24rpx 24rpx calc(24rpx + env(safe-area-inset-bottom) + 120rpx);
 }
 
 .sku-loading {

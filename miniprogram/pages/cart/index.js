@@ -4,8 +4,22 @@ const {
   selectAllCart,
   deleteCartItems,
   getCartRecommend,
-  quickAddProduct
+  addCart
 } = require('../../utils/trade-api')
+const {
+  getProductSpecs,
+  normalizeSku,
+  uniqueValues
+} = require('../../utils/catalog-api')
+
+// 工具函数
+function toArray(value) {
+  if (Array.isArray(value)) return value
+  if (value == null) return []
+  return [value]
+}
+
+
 
 // 滑动删除配置（使用 px 单位，movable-view 需要具体像素值）
 // 手指从右往左滑，商品左移，露出右侧删除按钮
@@ -22,7 +36,17 @@ Page({
     selectedCount: 0,
     totalAmount: 0,
     actionDisabled: true,
-    swipeItemId: ''
+    swipeItemId: '',
+    skuPopupVisible: false,
+    skuPopupLoading: false,
+    popupProduct: null,
+    popupSpecs: { size: [], material: [] },
+    popupSelectedSpecs: { size: '', material: '' },
+    popupSpecDisabledMap: { size: {}, material: {} },
+    popupCurrentSku: null,
+    popupQuantity: 1,
+    pendingAction: 'add',
+    submitLoading: false
   },
   _routing: false,
 
@@ -249,21 +273,9 @@ Page({
     })
   },
   onTapProduct(event) {
-    const { productId } = event.currentTarget.dataset
-    if (!productId || this._routing) return
-    this._routing = true
-    wx.navigateTo({
-      url: `/pages/product/detail?id=${productId}`,
-      complete: () => {
-        setTimeout(() => {
-          this._routing = false
-        }, 300)
-      }
-    })
-  },
-  onTapRecommend(event) {
-    const { id } = event.currentTarget.dataset
-    if (!id || this._routing) return
+    const { productId } = event.currentTarget.dataset || {}
+    const id = String(productId || '').trim()
+    if (!/^\d+$/.test(id) || this._routing) return
     this._routing = true
     wx.navigateTo({
       url: `/pages/product/detail?id=${id}`,
@@ -274,15 +286,185 @@ Page({
       }
     })
   },
+  onTapRecommend(event) {
+    const { id } = event.currentTarget.dataset || {}
+    const productId = String(id || '').trim()
+    if (!/^\d+$/.test(productId) || this._routing) return
+    this._routing = true
+    wx.navigateTo({
+      url: `/pages/product/detail?id=${productId}`,
+      complete: () => {
+        setTimeout(() => {
+          this._routing = false
+        }, 300)
+      }
+    })
+  },
 
   async onAddRecommendCart(event) {
     const { id } = event.currentTarget.dataset
+    if (!id || this.data.skuPopupLoading) return
+
+    this.setData({ skuPopupLoading: true })
     try {
-      await quickAddProduct(id, 1)
+      const product = this.data.recommendList.find((item) => String(item.id) === String(id)) || null
+      const specData = await this.getProductSpecData(id)
+      const skus = specData.skus || []
+      if (!skus.length) {
+        wx.showToast({ title: '该商品暂无可选规格', icon: 'none' })
+        return
+      }
+
+      const firstSku = skus.find((item) => (item.stock || 0) > 0) || skus[0]
+      const selectedSpecs = {
+        size: firstSku.size || '',
+        material: firstSku.material || ''
+      }
+
+      this.setData({
+        popupProduct: {
+          id: String(id),
+          title: (product && product.title) || '',
+          image: (product && product.image) || ''
+        },
+        popupSpecs: {
+          size: specData.sizeList || [],
+          material: specData.materialList || []
+        },
+        popupSelectedSpecs: selectedSpecs,
+        popupCurrentSku: firstSku,
+        popupSpecDisabledMap: { size: {}, material: {} },
+        popupQuantity: 1,
+        pendingAction: 'add',
+        submitLoading: false,
+        skuPopupVisible: true
+      })
+
+      this.updatePopupDisabledMap(selectedSpecs)
+    } catch (e) {
+      wx.showToast({ title: e.message || '规格加载失败', icon: 'none' })
+    } finally {
+      this.setData({ skuPopupLoading: false })
+    }
+  },
+  async getProductSpecData(productId) {
+    const key = String(productId)
+    if (this.productSpecCache && this.productSpecCache[key]) {
+      return this.productSpecCache[key]
+    }
+    const raw = await getProductSpecs(productId)
+    const skus = toArray(raw.skus).map(normalizeSku).filter((item) => item.id)
+    const data = {
+      skus,
+      sizeList: uniqueValues(skus.map((item) => item.size)),
+      materialList: uniqueValues(skus.map((item) => item.material))
+    }
+    this.productSpecCache = this.productSpecCache || {}
+    this.productSpecCache[key] = data
+    return data
+  },
+  getMatchedPopupSku(selectedSpecs) {
+    const popupProduct = this.data.popupProduct || {}
+    const specData = this.productSpecCache[String(popupProduct.id)] || { skus: [] }
+    const skuList = specData.skus || []
+    if (!skuList.length) return null
+    const matchRule = (item) => {
+      const sizeHit = !selectedSpecs.size || item.size === selectedSpecs.size
+      const materialHit = !selectedSpecs.material || item.material === selectedSpecs.material
+      return sizeHit && materialHit
+    }
+    return skuList.find((item) => matchRule(item) && (item.stock || 0) > 0)
+      || skuList.find(matchRule)
+      || skuList.find((item) => (item.stock || 0) > 0)
+      || skuList[0]
+  },
+  updatePopupDisabledMap(selectedSpecs) {
+    const popupProduct = this.data.popupProduct || {}
+    const specData = this.productSpecCache[String(popupProduct.id)] || { skus: [] }
+    const skuList = specData.skus || []
+    const sizeOptions = (this.data.popupSpecs || {}).size || []
+    const materialOptions = (this.data.popupSpecs || {}).material || []
+    const disabledMap = { size: {}, material: {} }
+    sizeOptions.forEach((opt) => {
+      const hasMatch = skuList.some((sku) => sku.size === opt && (sku.stock || 0) > 0 && (!selectedSpecs.material || sku.material === selectedSpecs.material))
+      if (!hasMatch) disabledMap.size[opt] = true
+    })
+    materialOptions.forEach((opt) => {
+      const hasMatch = skuList.some((sku) => sku.material === opt && (sku.stock || 0) > 0 && (!selectedSpecs.size || sku.size === selectedSpecs.size))
+      if (!hasMatch) disabledMap.material[opt] = true
+    })
+    this.setData({ popupSpecDisabledMap: disabledMap })
+  },
+  onCloseSkuPopup() {
+    this.setData({ skuPopupVisible: false })
+  },
+  onTapSkuPopupPanel() {
+  },
+  onSelectPopupSpec(event) {
+    const { key, value } = event.currentTarget.dataset
+    if ((this.data.popupSpecDisabledMap || {})[key]?.[value]) return
+    const nextSpecs = { ...this.data.popupSelectedSpecs, [key]: value }
+    const matched = this.getMatchedPopupSku(nextSpecs)
+    this.setData({
+      popupSelectedSpecs: nextSpecs,
+      popupCurrentSku: matched
+    })
+    this.updatePopupDisabledMap(nextSpecs)
+  },
+  onChangePopupQty(event) {
+    const { type } = event.currentTarget.dataset
+    const stock = (this.data.popupCurrentSku || {}).stock || 0
+    let nextQty = this.data.popupQuantity || 1
+    if (type === 'dec') {
+      nextQty = Math.max(1, nextQty - 1)
+    } else if (type === 'inc') {
+      nextQty = Math.min(stock || 999, nextQty + 1)
+    }
+    this.setData({ popupQuantity: nextQty })
+  },
+  async onConfirmPopupAddCart() {
+    if (this.data.submitLoading) return
+    const sku = this.data.popupCurrentSku || {}
+    const product = this.data.popupProduct || {}
+    if (!sku.id) {
+      wx.showToast({ title: '请选择完整规格', icon: 'none' })
+      return
+    }
+    this.setData({ submitLoading: true, pendingAction: 'add' })
+    try {
+      await addCart({ productId: product.id, skuId: sku.id, quantity: this.data.popupQuantity || 1 })
       wx.showToast({ title: '已加入购物车', icon: 'success' })
+      this.setData({ skuPopupVisible: false })
       await this.loadCart()
     } catch (e) {
       wx.showToast({ title: e.message || '加入购物车失败', icon: 'none' })
+    } finally {
+      this.setData({ submitLoading: false, pendingAction: 'add' })
+    }
+  },
+  async onConfirmPopupBuyNow() {
+    if (this.data.submitLoading) return
+    const sku = this.data.popupCurrentSku || {}
+    const product = this.data.popupProduct || {}
+    if (!sku.id) {
+      wx.showToast({ title: '请选择完整规格', icon: 'none' })
+      return
+    }
+    this.setData({ submitLoading: true, pendingAction: 'buy' })
+    try {
+      await addCart({ productId: product.id, skuId: sku.id, quantity: this.data.popupQuantity || 1 })
+      await this.loadCart()
+      const newItem = this.data.cartItems.find((item) => String(item.skuId) === String(sku.id))
+      if (!newItem) {
+        throw new Error('加入购物车失败')
+      }
+      this.setData({ skuPopupVisible: false })
+      wx.setStorageSync('YH_CHECKOUT_IDS', [newItem.id])
+      wx.navigateTo({ url: '/pages/order/confirm/index' })
+    } catch (e) {
+      wx.showToast({ title: e.message || '立即购买失败', icon: 'none' })
+    } finally {
+      this.setData({ submitLoading: false, pendingAction: 'add' })
     }
   },
   onContinueShopping() {

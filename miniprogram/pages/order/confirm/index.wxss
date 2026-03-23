@@ -1,5 +1,15 @@
+/* 覆盖 page-shell 的 padding，因为此页面无 tabBar */
+.page-shell {
+  padding-bottom: 0 !important;
+}
+
 .page-wrap {
-  padding-bottom: 130rpx;
+  padding-bottom: 0;
+}
+
+/* 订单内容区域，为底部 submit-bar 留空间 */
+.order-content {
+  padding-bottom: calc(120rpx + env(safe-area-inset-bottom));
 }
 
 .delivery-wrap {
@@ -138,31 +148,44 @@
   left: 0;
   right: 0;
   bottom: 0;
+  z-index: 1000;
   background: #fff;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 24rpx;
   padding: 16rpx 24rpx calc(env(safe-area-inset-bottom) + 16rpx);
   box-shadow: 0 -8rpx 16rpx rgba(0, 0, 0, 0.04);
 }
 
 .sum {
-  color: #ff4d4f;
-  font-size: 38rpx;
-  font-weight: 600;
+  flex: 1;
+  color: #444;
+  font-size: 34rpx;
 }
 
 .sum-price {
   color: #ff4d4f;
+  font-weight: 600;
 }
 
 
 .submit-btn,
 .go-btn {
+  width: 238rpx;
   height: 72rpx;
   border-radius: 36rpx;
-  padding: 0 46rpx;
-  font-size: 34rpx;
+  background: #ff4d4f;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 36rpx;
+  font-weight: 500;
+}
+
+.submit-btn.disabled {
+  opacity: 0.45;
 }
 
 .empty-wrap {

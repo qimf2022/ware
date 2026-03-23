@@ -35,6 +35,7 @@
           wx:for="{{products}}"
           wx:key="id"
           product="{{item}}"
+          data-id="{{item.id}}"
           bind:tap="onTapProduct"
           bind:addcart="onAddCart"
         />
@@ -103,6 +104,13 @@
       </view>
     </view>
   </view>
+
+  <!-- 授权弹窗 -->
+  <auth-modal 
+    visible="{{showAuthModal}}" 
+    bind:cancel="onAuthModalCancel"
+    bind:success="onAuthModalSuccess"
+  />
 </page-shell>
 
 

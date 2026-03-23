@@ -52,6 +52,7 @@
             wx:for="{{recommendProducts}}"
             wx:key="id"
             product="{{item}}"
+            data-id="{{item.id}}"
             bind:tap="onTapRecommend"
             bind:addcart="onAddRecommendCart"
           />

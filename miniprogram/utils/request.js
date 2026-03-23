@@ -1,4 +1,4 @@
-const DEFAULT_BASE_URL = 'http://192.168.0.100:8083/api/v1'
+const DEFAULT_BASE_URL = 'http://192.168.0.101:8099/api/v1'
 const BASE_URL = DEFAULT_BASE_URL
 const REQUEST_PATH_PREFIX = '/api/v1'
 const TOKEN_KEY = 'YH_ACCESS_TOKEN'
@@ -297,6 +297,57 @@ async function forceWechatLogin(userInfo = null) {
   return ensureToken(true, userInfo)
 }
 
+/**
+ * 静默登录：使用微信 code 登录，不需要用户信息
+ * 适用于已授权过的老用户
+ */
+async function silentLogin() {
+  const loginRes = await new Promise((resolve, reject) => {
+    wx.login({
+      success: resolve,
+      fail: () => reject(new Error('微信登录调用失败'))
+    })
+  })
+
+  const code = (loginRes && loginRes.code) || ''
+  if (!code) {
+    throw new Error('微信登录失败：未获取到 code')
+  }
+
+  // 静默登录，不传 userInfo
+  const loginResp = await wxRequest({
+    url: `${getBaseUrl()}/auth/login`,
+    method: 'POST',
+    header: {
+      'Content-Type': 'application/json',
+      'X-Platform': 'miniprogram',
+      'X-Version': '1.0.0'
+    },
+    data: {
+      code,
+      userInfo: null
+    }
+  })
+
+  const body = loginResp.data || {}
+  if (
+    loginResp.statusCode < 200 ||
+    loginResp.statusCode >= 300 ||
+    body.code !== 0 ||
+    !body.data ||
+    !body.data.token
+  ) {
+    throw new Error((body && body.message) || '登录接口异常')
+  }
+
+  wx.setStorageSync(TOKEN_KEY, body.data.token)
+  if (body.data.userId !== undefined && body.data.userId !== null) {
+    wx.setStorageSync(USER_ID_KEY, body.data.userId)
+  }
+  setAuthMode('wechat')
+  return body.data.token
+}
+
 
 async function request(options = {}) {
   const {
@@ -363,8 +414,10 @@ module.exports = {
   clearAuthCache,
   resolveAssetUrl,
   BASE_URL,
+  getBaseUrl,
   initAuth,
   forceWechatLogin,
+  silentLogin,
   getAuthMode,
   hasLocalToken
 }

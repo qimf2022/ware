@@ -1,5 +1,6 @@
 package com.shiyu.backend.controller;
 
+import com.shiyu.backend.annotation.NoAuth;
 import com.shiyu.backend.common.ApiResponse;
 import com.shiyu.backend.context.UserContext;
 import com.shiyu.backend.service.MockCatalogService;
@@ -18,6 +19,7 @@ import java.util.Map;
  */
 @RestController
 @RequestMapping("/api/v1/products")
+@NoAuth
 public class ProductController {
 
     private final MockCatalogService mockCatalogService;

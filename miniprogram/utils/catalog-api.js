@@ -99,18 +99,28 @@ async function getProducts(params = {}) {
 }
 
 async function getProductDetail(productId) {
-  return request({ url: `/products/${productId}`, method: 'GET' })
+  if (!productId) {
+    throw new Error('商品ID不能为空')
+  }
+  return request({ url: `/products/${productId}`, method: 'GET', withAuth: false })
 }
 
 async function getProductSpecs(productId) {
-  return request({ url: `/products/${productId}/specs`, method: 'GET' })
+  if (!productId) {
+    throw new Error('商品ID不能为空')
+  }
+  return request({ url: `/products/${productId}/specs`, method: 'GET', withAuth: false })
 }
 
 async function getProductRecommend(productId, limit = 4) {
+  if (!productId) {
+    throw new Error('商品ID不能为空')
+  }
   return request({
     url: `/products/${productId}/recommend`,
     method: 'GET',
-    data: { limit }
+    data: { limit },
+    withAuth: false
   })
 }
 

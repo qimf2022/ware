@@ -86,7 +86,12 @@ public class GlobalExceptionHandler {
      * @return 参数错误响应
      */
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
-    public ApiResponse<Void> handleMethodArgumentTypeMismatchException(MethodArgumentTypeMismatchException ex) {
+    public ApiResponse<Void> handleMethodArgumentTypeMismatchException(MethodArgumentTypeMismatchException ex, HttpServletRequest request) {
+        String traceId = TraceIdContext.get();
+        String paramName = ex.getName();
+        String paramValue = ex.getValue() != null ? ex.getValue().toString() : "null";
+        String uri = request != null ? request.getRequestURI() : "";
+        log.warn("param type mismatch, traceId={}, param={}, value={}, uri={}", traceId, paramName, paramValue, uri);
         return ApiResponse.fail(BizCode.PARAM_ERROR.getCode(), BizCode.PARAM_ERROR.getMessage());
     }
 

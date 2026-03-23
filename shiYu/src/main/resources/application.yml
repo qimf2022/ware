@@ -93,6 +93,14 @@ wx:
         aesKey: ""
         msgDataFormat: JSON
 
+aliyun:
+  oss:
+    endpoint: http://oss-cn-shanghai.aliyuncs.com
+    accessKeyId: ${ALIYUN_OSS_ACCESS_KEY_ID:your-access-key-id}
+    accessKeySecret: ${ALIYUN_OSS_ACCESS_KEY_SECRET:your-access-key-secret}
+    bucketName: cyberas-12
+    userAvatarPath: /YHome/user/
+
 logging:
   level:
     root: INFO

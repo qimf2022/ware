@@ -32,6 +32,7 @@
             wx:key="id"
             layout="row"
             product="{{item}}"
+            data-id="{{item.id}}"
             bind:tap="onTapProduct"
             bind:addcart="onAddCart"
           />

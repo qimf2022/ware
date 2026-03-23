@@ -99,7 +99,12 @@ Page({
     this.setData({ historyKeywords: [] })
   },
   onTapResult(event) {
-    const { id } = event.currentTarget.dataset
-    wx.navigateTo({ url: `/pages/product/detail?id=${id}` })
+    const { id } = event.currentTarget.dataset || {}
+    const productId = String(id || '').trim()
+    if (!/^\d+$/.test(productId)) {
+      wx.showToast({ title: '商品ID无效', icon: 'none' })
+      return
+    }
+    wx.navigateTo({ url: `/pages/product/detail?id=${productId}` })
   }
 })

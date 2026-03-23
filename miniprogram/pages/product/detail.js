@@ -47,7 +47,14 @@ Page({
   },
 
   onLoad(options) {
-    this.setData({ productId: options.id || '' })
+    const rawId = options && options.id
+    const productId = String(rawId || '').trim()
+    if (!/^\d+$/.test(productId)) {
+      this.setData({ pageState: 'error' })
+      wx.showToast({ title: '商品ID无效', icon: 'none' })
+      return
+    }
+    this.setData({ productId })
     this.loadPage()
   },
   onPullDownRefresh() {
@@ -220,8 +227,14 @@ Page({
     })
   },
   onTapRecommend(event) {
-    const { id } = event.detail
-    wx.navigateTo({ url: `/pages/product/detail?id=${id}` })
+    const detailId = event && event.detail ? event.detail.id : ''
+    const datasetId = event && event.currentTarget && event.currentTarget.dataset ? event.currentTarget.dataset.id : ''
+    const productId = String(detailId || datasetId || '').trim()
+    if (!/^\d+$/.test(productId)) {
+      wx.showToast({ title: '商品ID无效', icon: 'none' })
+      return
+    }
+    wx.navigateTo({ url: `/pages/product/detail?id=${productId}` })
   },
   async onAddRecommendCart(event) {
     try {

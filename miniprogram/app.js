@@ -1,4 +1,4 @@
-const { clearAuthCache, getAuthMode, hasLocalToken } = require('./utils/request')
+const { clearAuthCache, getAuthMode, hasLocalToken, silentLogin } = require('./utils/request')
 
 const USER_PROFILE_AUTH_KEY = 'YH_USER_PROFILE_AUTH'
 const FORCE_GUEST_KEY = 'YH_FORCE_GUEST'
@@ -9,7 +9,8 @@ App({
   globalData: {
     brandName: '诗语家居（Yu Home）',
     authMode: 'guest',
-    loginReady: false
+    loginReady: false,
+    showAuthModal: false
   },
 
   onLaunch() {
@@ -17,19 +18,60 @@ App({
     const profileAuthed = !!wx.getStorageSync(USER_PROFILE_AUTH_KEY)
     const mode = getAuthMode()
     const hasToken = hasLocalToken()
-    const validWechatLogin = !forceGuest && profileAuthed && mode === 'wechat' && hasToken
 
-    // 如果登录状态不完整，清除所有认证相关缓存（包括 USER_PROFILE_AUTH_KEY）
-    // 这样才能在下次进入时正确显示授权弹窗
-    if (!validWechatLogin && (mode === 'wechat' || hasToken || profileAuthed)) {
+    // 如果用户设置了强制访客模式（主动退出登录），不尝试静默登录
+    if (forceGuest) {
+      this._authGuideShown = false
+      this._authGuideTimer = null
+      this._authGuideSilentUntil = 0
+      this.globalData.authMode = 'guest'
+      this.globalData.loginReady = true
+      return
+    }
+
+    // 如果用户之前授权过，尝试静默登录
+    if (profileAuthed) {
+      this.trySilentLogin()
+      return
+    }
+
+    // 如果登录状态不完整，清除所有认证相关缓存
+    if (mode === 'wechat' || hasToken) {
       clearAuthCache()
-      wx.removeStorageSync(USER_PROFILE_AUTH_KEY)
     }
 
     this._authGuideShown = false
     this._authGuideTimer = null
     this._authGuideSilentUntil = 0
-    this.globalData.authMode = validWechatLogin ? 'wechat' : 'guest'
+    this.globalData.authMode = 'guest'
+    this.globalData.loginReady = true
+  },
+
+  /**
+   * 尝试静默登录（已授权过的用户）
+   */
+  async trySilentLogin() {
+    try {
+      const token = await silentLogin()
+      if (token) {
+        this.globalData.authMode = 'wechat'
+        this.globalData.loginReady = true
+        this._authGuideShown = true
+        console.log('静默登录成功')
+        return
+      }
+    } catch (e) {
+      console.warn('静默登录失败:', e.message)
+    }
+
+    // 静默登录失败，清除状态
+    clearAuthCache()
+    wx.removeStorageSync(USER_PROFILE_AUTH_KEY)
+
+    this._authGuideShown = false
+    this._authGuideTimer = null
+    this._authGuideSilentUntil = 0
+    this.globalData.authMode = 'guest'
     this.globalData.loginReady = true
   },
 
@@ -40,6 +82,7 @@ App({
 
   markWechatLoginSuccess() {
     this.globalData.authMode = 'wechat'
+    this.globalData.showAuthModal = false
     this._authGuideShown = true
     this.suppressAuthGuide(15000)
     if (this._authGuideTimer) {
@@ -53,8 +96,25 @@ App({
     // 弹窗触发依赖 Page.onShow 中的调用
   },
 
+  /**
+   * 隐藏授权弹窗。
+   */
+  hideAuthModal() {
+    this.globalData.showAuthModal = false
+    this._authGuideShown = true
+    this.suppressAuthGuide(30000)
+  },
+
   maybeShowAuthGuide(options = {}) {
     const force = !!(options && options.force)
+
+    // 如果静默登录正在进行中，稍后重试
+    if (!this.globalData.loginReady) {
+      setTimeout(() => {
+        this.maybeShowAuthGuide(options)
+      }, 100)
+      return
+    }
 
     // 先检查页面栈，避免在 App.onShow 时执行后续逻辑
     const pages = getCurrentPages()
@@ -86,26 +146,14 @@ App({
         return
       }
       this._authGuideTimer = null
-      wx.showModal({
 
-        title: '微信授权登录',
-        content: '首次使用建议完成微信授权，用于同步头像和昵称。是否现在授权？',
-        confirmText: '去授权',
-        cancelText: '先逛逛',
-        success: (res) => {
-          if (!res.confirm) return
-          this.suppressAuthGuide(30000)
-          wx.navigateTo({
-            url: '/pages/auth/login/index?from=launch',
-            fail: () => {
-              wx.switchTab({ url: '/pages/mine/index' })
-            }
-          })
-        },
-        fail: () => {
-          this._authGuideShown = false
-        }
-      })
+      // 显示自定义授权弹窗
+      this.globalData.showAuthModal = true
+
+      // 通知当前页面更新状态
+      if (current && typeof current.onAuthModalStateChange === 'function') {
+        current.onAuthModalStateChange(true)
+      }
     }, 120)
   }
 })

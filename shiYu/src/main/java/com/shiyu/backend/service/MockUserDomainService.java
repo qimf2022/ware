@@ -73,6 +73,22 @@ public class MockUserDomainService {
                 uid);
     }
 
+    /**
+     * 检查用户是否已存在（通过 openid）。
+     *
+     * @param openid 微信 openid
+     * @return 是否已存在
+     */
+    public boolean existsByOpenid(String openid) {
+        String safeOpenid = trimToNull(openid);
+        if (safeOpenid == null) {
+            return false;
+        }
+        Integer count = jdbcTemplate.queryForObject(
+                "SELECT COUNT(1) FROM users WHERE openid = ? LIMIT 1", Integer.class, safeOpenid);
+        return count != null && count > 0;
+    }
+
     @Transactional(rollbackFor = Exception.class)
     public Long loginByWechatIdentity(String openid, String unionid, String nickName, String avatarUrl, Integer gender) {
         String safeOpenid = trimToNull(openid);

@@ -102,14 +102,22 @@ public class AuthController {
                 nickName != null && !nickName.trim().isEmpty(),
                 avatarUrl != null && !avatarUrl.trim().isEmpty());
 
-        if (!hasAuthorizedUserInfo(nickName, avatarUrl)) {
+        // 先获取微信 session
+        WechatSession session = exchangeCodeForSession(code);
+        String openid = session.getOpenid();
+
+        // 检查是否为老用户（已注册）
+        boolean isExistingUser = mockUserDomainService.existsByOpenid(openid);
+
+        // 老用户允许静默登录（不需要 userInfo）
+        // 新用户必须提供有效的 userInfo
+        if (!isExistingUser && !hasAuthorizedUserInfo(nickName, avatarUrl)) {
             throw new BizException(BizCode.AUTH_FAIL, "请先完成微信授权");
         }
 
-        WechatSession session = exchangeCodeForSession(code);
-        Long userId = mockUserDomainService.loginByWechatIdentity(session.getOpenid(), session.getUnionid(), nickName, avatarUrl, gender);
+        Long userId = mockUserDomainService.loginByWechatIdentity(openid, session.getUnionid(), nickName, avatarUrl, gender);
         String token = jwtUtil.generateToken(userId);
-        log.info("auth.login.success traceId={}, method={}, userId={}", traceId, httpMethod, userId);
+        log.info("auth.login.success traceId={}, method={}, userId={}, isNewUser={}", traceId, httpMethod, userId, !isExistingUser);
         return ApiResponse.success(new LoginResponse(userId, token));
     }
 

@@ -1,0 +1,39 @@
+<view class="auth-modal-mask" wx:if="{{visible}}" bindtap="onCancel">
+  <view class="auth-modal-container" catchtap="onPreventBubble">
+    <view class="auth-modal-header">
+      <text class="auth-modal-title">完善个人信息</text>
+      <text class="auth-modal-subtitle">设置头像和昵称，开启专属体验</text>
+    </view>
+    
+    <view class="auth-modal-body">
+      <!-- 头像选择 -->
+      <view class="auth-avatar-section">
+        <button class="auth-avatar-btn" open-type="chooseAvatar" bind:chooseavatar="onChooseAvatar">
+          <image class="auth-avatar-img" src="{{avatarUrl || defaultAvatar}}" mode="aspectFill" />
+          <view class="auth-avatar-tip">点击选择头像</view>
+        </button>
+      </view>
+      
+      <!-- 昵称输入 -->
+      <view class="auth-nickname-section">
+        <input 
+          class="auth-nickname-input" 
+          type="nickname" 
+          placeholder="请输入昵称" 
+          value="{{nickname}}"
+          bindinput="onNicknameInput"
+          bindblur="onNicknameBlur"
+          maxlength="20"
+        />
+        <view class="auth-nickname-tip">可点击使用微信昵称</view>
+      </view>
+    </view>
+    
+    <view class="auth-modal-footer">
+      <button class="auth-btn auth-btn-cancel" bindtap="onCancel">稍后再说</button>
+      <button class="auth-btn auth-btn-confirm" bindtap="onConfirm" loading="{{loading}}" disabled="{{loading}}">
+        {{loading ? '保存中...' : '确认授权'}}
+      </button>
+    </view>
+  </view>
+</view>
